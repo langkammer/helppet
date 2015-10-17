@@ -1,0 +1,61 @@
+<div class="modal">
+  <header class="bar bar-header bar-positive">
+    <h1 class="title">Cadastrar</h1>
+    <div class="button button-clear" ng-click="pedidoCadastro.hide()"><span class="icon ion-close"></span></div>
+  </header>
+  <content has-header="true" padding="true">
+    <ion-view view-title="Filtro">
+        <div class="list">
+          <div class="item item-divider">
+            Fotos
+          </div>
+          <div ng-repeat="foto in pedido.fotos">
+            <div ng-show="foto !== undefined">
+              <img  ng-src="{{foto}}" width="25%" height="25%"> <a ng-click="removeFoto(foto)" href="#">x</a>
+            </div>
+          </div>
+          <button class="button ion-android-camera" ng-click="tirarFoto()">&nbsp; Tira Foto</button>
+          <button class="button ion-android-image" ng-click="anexarFoto()">&nbsp; Anexar Foto</button>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Tipo Animal
+            </div>
+            <select>
+              <option selected>Cão</option>
+              <option>Gato</option>
+              <option>Outro</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Condição
+            </div>
+            <select>
+              <option selected>Bom Estado</option>
+              <option>Machucado</option>
+            </select>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Data Avistamento</span>
+            <input type="date">
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Observação</span>
+            <textarea  type="text" rows="10"  placeholder="Observação"></textarea>
+          </label>
+
+        </div>
+    </ion-view>
+
+  </content>
+  <footer class="bar bar-footer bar-positive">
+    <content>
+      <button class="button button-positive " ng-click="addPedido()">
+        Aplicar
+      </button>
+      <button class="button button-assertive"  ng-click="pedidoCadastro.hide()">
+        Cancelar
+      </button>
+    </content>
+  </footer>
+</div>

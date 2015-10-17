@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/bower.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/css/style.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/Controller/IntroController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/Controller/MapaController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/Controller/PainelController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/Controller/PedidoController.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/Directive/Alerta.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/Service/pipe.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/js/app.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/login/login.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/modal/modal_cadastro_pedido.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/modal/modal_cadastro_usuario.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/modal/modal_filtro_mapa.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/painel.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/tabs/config.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/tabs/home.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/tabs/mapa.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/tabs/sub_tab/comentarios.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/tabs/sub_tab/detailpedido.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/www/pages/tabs/sub_tab/mapa_pedido.html" charset="UTF-8" />
+  </component>
+</project>

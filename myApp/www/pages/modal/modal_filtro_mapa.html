@@ -1,0 +1,58 @@
+<div class="modal">
+  <header class="bar bar-header bar-positive">
+    <h1 class="title">Filtrar</h1>
+    <div class="button button-clear" ng-click="filtroMapa.hide()"><span class="icon ion-close"></span></div>
+  </header>
+  <content has-header="true" padding="true">
+    <ion-view view-title="Filtro">
+      <ul class="list">
+        <div class="item item-divider">
+          <p>Tipo Animal</p>
+        </div>
+        <li class="item item-toggle">
+          Cães
+          <label class="toggle toggle-positive">
+            <input type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </li>
+        <li class="item item-toggle">
+          Gatos
+          <label class="toggle toggle-calm">
+            <input type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </li>
+        <li class="item item-toggle">
+          Outros
+          <label class="toggle toggle-assertive">
+            <input type="checkbox">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </li>
+        <div class="item range">
+          <i>0 KM</i>
+          <input type="range" name="volume" ng-model="range">
+          <i>{{range == null ? 50 : range}} KM</i>
+        </div>
+      </ul>
+    </ion-view>
+
+  </content>
+  <footer class="bar bar-footer bar-positive">
+    <content>
+      <button class="button button-positive " ng-click="filtroMapa.hide()">
+        Aplicar
+      </button>
+      <button class="button button-assertive"  ng-click="filtroMapa.hide()">
+        Cancelar
+      </button>
+    </content>
+  </footer>
+</div>

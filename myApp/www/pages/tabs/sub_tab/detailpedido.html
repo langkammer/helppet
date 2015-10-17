@@ -1,0 +1,64 @@
+<ion-view view-title="Pedido">
+  <ion-content>
+<ion-slide-box on-slide-changed="slideHasChanged($index)">
+  <ion-slide>
+    <img src="img/vira-lata-cao.jpg" height="100%" width="100%">
+  </ion-slide>
+  <ion-slide>
+    <img src="img/cao-vira-lata.jpg" height="100%" width="100%">
+  </ion-slide>
+  <ion-slide>
+    <img src="img/cao-vira-lata2.jpg" height="100%" width="100%">
+  </ion-slide>
+</ion-slide-box>
+
+    <button class="button button-full  button-balanced" ng-click="mapaPedido()">
+     <div class="ion-ios-location" >&nbsp; Localização</div>
+    </button>
+    <button class="button button-full  button-energized"  ng-click="comentarios()">
+      <div class="ion-social-twitch">&nbsp; Comentários</div>
+    </button>
+    <div class="row">
+      <div class="col col-100 font_detalhes">
+        <div class="item item-divider">
+          Tipo animal
+        </div>
+        <div class="item">
+          Cão
+        </div>
+        <div class="item item-divider">
+          Data
+        </div>
+        <div class="item">
+          01/02/2015
+        </div>
+        <div class="item item-divider">
+          Condições  :
+        </div>
+        <div class="item">
+          Machucado
+        </div>
+        <div class="item item-divider">
+          Autor :
+        </div>
+        <div class="item">
+          José Luiz
+        </div>
+        <div class="item item-divider">
+          Observação :
+        </div>
+        <div class="item">
+          Cão Manso mais tenha cuidado
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!--<a class="button icon ion-home" href="#/tab/home"> Home</a>-->
+    <!--<button class="button button-positive no-animation" ng-click="testa()">-->
+      <!--Adicionar Pedido-->
+    <!--</button>-->
+  </ion-content>
+</ion-view>

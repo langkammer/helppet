@@ -1,0 +1,24 @@
+<div class="list">
+  <label class="item item-input">
+    <span class="input-label">Usuario</span>
+    <input type="text" ng-model="user.username">
+  </label>
+  <label class="item item-input">
+    <span class="input-label">Senha</span>
+    <input type="password" ng-model="user.password">
+  </label>
+</div>
+<div class="padding">
+  <button class="button button-block button-positive" ng-click="signIn(user)">
+    Sign-In
+  </button>
+  <button class="button button-full  button-balanced">
+    <div>&nbsp; Cadastrar</div>
+  </button>
+  <button class="button button-full  button-positive">
+    <div class="ion-social-facebook">&nbsp; Logar com Facebook</div>
+  </button>
+  <p class="text-center">
+    <a href="#/forgot-password">Perdeu Sua Senha?</a>
+  </p>
+</div>

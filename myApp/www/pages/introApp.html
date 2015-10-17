@@ -1,0 +1,51 @@
+  <ion-view view-title="Intro">
+    <ion-nav-buttons side="left">
+      <button class="button button-positive no-animation"
+              ng-click="previous()" ng-show="slideIndex > 0">
+        Voltar
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+      <button class="button button-positive no-animation"
+              ng-click="next()" ng-show="slideIndex != 2">
+        Avançar
+      </button>
+      <button class="button button-positive no-animation"
+              ng-click="startApp()" ng-show="slideIndex == 2">
+        Abrir Aplicativo
+      </button>
+    </ion-nav-buttons>
+    <ion-slide-box on-slide-changed="slideChanged(index)">
+
+      <ion-slide>
+
+        <div>
+          <h4>Obrigado por Baixar Help Pet</h4>
+        </div>
+        <div id="logo">
+          <img src="img/bg_intro.png" height="60%" width="65%">
+        </div>
+        <p>
+          Ajude a nós ajudar animais que precisam de ajuda
+        </p>
+      </ion-slide>
+      <ion-slide>
+        <h3>Antes de começar a utilizar Lembre-se</h3>
+
+        <div id="list">
+          <ol>
+            <li>Anexe fotos aos Pets</li>
+            <li>Informe o Endereço Onde Você viu o PET</li>
+            <li>Detalhe informações de seu PET</li>
+          </ol>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <h3>É isso ai</h3>
+        <h5>Clique no Icone para abrir o APP</h5>
+        <h1><a class="button button-icon ion-checkmark-round"></a> </h1>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-view>
+
+
