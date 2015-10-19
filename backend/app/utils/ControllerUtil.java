@@ -2,8 +2,14 @@ package utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vividsolutions.jts.geom.Geometry;
 import enums.StatusEnum;
+import flexjson.JSONSerializer;
+import flexjson.transformer.DateTransformer;
+import org.geotools.gml.producer.GeometryTransformer;
 import play.mvc.Controller;
+
+import java.util.Date;
 
 /**
  * Classe util pai para controllers.
@@ -55,7 +61,17 @@ public class ControllerUtil extends Controller {
 
 	}
 
-	/**
+	protected static void renderJSONGEOSucesso(Object data, String message, String... campos) {
+
+		renderJSON(new JSONSerializer()
+				.include(campos)
+				.exclude("*")
+				.transform(new DateTransformer("dd/MM/yyyy"), Date.class)
+				.transform(new utils.transformer.GeometryTransformer(), Geometry.class)
+				.serialize(data));
+
+
+	}	/**
 	 * Método overloaded para renderizar um erro como json usando o envelope definido.
 	 *
 	 * @param message - mensagem a ser anexada no envelope.

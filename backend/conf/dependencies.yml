@@ -2,3 +2,25 @@
 
 require:
     - play
+    - com.vividsolutions -> jts 1.13
+    - net.sf.flexjson -> flexjson 2.1
+    - com.google.code.geocoder-java  -> geocoder-java 0.16
+    - org.hibernate -> hibernate-spatial 4.0.1
+    - org.postgresql -> postgresql 9.0
+    - org.geotools -> gt-geojson 12.2
+    - br.com.caelum.stella -> caelum-stella-bean-validation 2.0.4
+    - org.apache.poi -> poi 3.9
+    - uk.com.robust-it -> cloning 1.9.2
+repositories:
+    - hibernatespatial:
+        type: iBiblio
+        root: "http://www.hibernatespatial.org/repository"
+        contains:
+            - org.hibernate -> *
+            - org.postgis -> *
+
+    - geotools:
+            type: iBiblio
+            root: "http://download.osgeo.org/webdav/geotools/"
+            contains:
+                - org.geotools -> *
