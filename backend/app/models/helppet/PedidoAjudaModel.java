@@ -1,49 +1,64 @@
 package models.helppet;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Point;
 import enums.EnumFrequencia;
 import enums.EnumPedidoAjuda;
 import enums.TipoAnimal;
 import models.portalseg.UsuarioModel;
 import org.hibernate.annotations.Type;
-import play.db.jpa.Blob;
-import play.db.jpa.Model;
+import play.db.jpa.GenericModel;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Robson on 03/10/2015.
  */
 @Entity
-public class PedidoAjudaModel extends Model{
+@Table(name = "pedido_ajuda")
+public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
+
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pedido_id_seq")
+	@SequenceGenerator(name = "pedido_id_seq",
+			sequenceName = "pedido_id_seq",
+			allocationSize = 1)
+	@Column(columnDefinition = "serial")
+	public Long id;
 
 	@OneToOne
+	@JoinColumn(name = "ID_USUARIO")
 	public UsuarioModel usuario;
 
-	public Blob foto;
+	@OneToOne
+	@JoinColumn(name = "ID_FOTO")
+	public FotosModel foto;
 
+	@Column(name="TIPO_ANIMAL")
 	@Enumerated
 	public TipoAnimal tipoAnimal;
 
 	@Type(type = "org.hibernate.spatial.GeometryType")
+	@Column(name = "GEO", nullable = true)
 	public Geometry geo;
 
+	@Column(name="OBSERVACAO")
 	public String observacao;
 
+	@Column(name="CONDICOES")
 	public String condicoes;
 
+	@Column(name="FREQUENCIA")
 	@Enumerated
 	public EnumFrequencia frequencia;
 
+	@Column(name="STATUS")
 	@Enumerated
 	public EnumPedidoAjuda status;
 
+	@Column(name="DATA_POSTAGEM")
 	public Date data;
 
 //
