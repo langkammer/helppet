@@ -102,3 +102,9 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+.letraCapa {
+  color: white;
+  margin-top: 40px;
+  margin-left: 25px;
+  border-color: #250404;
+}
