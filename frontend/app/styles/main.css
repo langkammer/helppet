@@ -95,10 +95,10 @@ body {
 .img_cap{
   border-bottom-color: #080808;
 }
-.img {
-  padding-bottom: 44.7%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
+body {
+  background: url(../images/cao_capa.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  background-image: url('../images/cao_capa.jpg');
 }
