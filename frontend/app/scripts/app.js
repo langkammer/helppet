@@ -25,6 +25,10 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/pedido', {
+        templateUrl: 'views/pedido_ajuda.html',
+        controller: 'PedidoCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
