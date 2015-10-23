@@ -15,7 +15,7 @@ public class EnvelopUtil {
 
 	private Object data;
 
-	private Long length;
+	private int length;
 
 	public EnvelopUtil(StatusEnum status, String message) {
 
@@ -24,7 +24,7 @@ public class EnvelopUtil {
 
 	}
 
-	public EnvelopUtil(StatusEnum status, String message, Object data, Long length) {
+	public EnvelopUtil(StatusEnum status, String message, Object data, int length) {
 
 		this.status = status.getValor();
 		this.message = message;
@@ -32,5 +32,6 @@ public class EnvelopUtil {
 		this.length = length;
 
 	}
+
 
 }

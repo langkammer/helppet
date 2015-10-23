@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='pt-br'>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/material-design-lite/material.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="frontendApp">
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">HELP - PET</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Navigation. We hide it in small screens. -->
+          <nav class="mdl-navigation mdl-layout--large-screen-only">
+            <h1>1</h1>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <div class="mdl-grid">
+          <img src="images/logo.png" width="40px" height="40px" class="demo-avatar">
+        </div>
+        <span class="mdl-layout-title">Menu</span>
+
+        <nav class="mdl-navigation">
+          <div class="mdl-navigation__link" ><div class="material-icons">home</div>&nbsp; Home </div>
+          <div class="mdl-navigation__link" ><div class="material-icons">person</div>&nbsp; Login </div>
+          <div class="mdl-navigation__link" ><div class="material-icons">assignment_ind</div>&nbsp; Cadastre-se </div>
+          <div class="mdl-navigation__link" ><div class="material-icons">error_outline</div>&nbsp; Pedidos em Abertos </div>
+          <div class="mdl-navigation__link" ><div class="material-icons">map</div>&nbsp; Mapa de Localização </div>
+          <div class="mdl-navigation__link" ><div class="material-icons">supervisor_account</div>&nbsp; Parceiros </div>
+          <div class="mdl-navigation__link" ><div class="material-icons">account_balance</div>&nbsp; Conheça - nos </div>
+
+          <!--<a class="mdl-navigation__link" href=""><i class="md-icon dp48">person</i> &nbsp; Cadastre-se</a>-->
+          <!--<a class="mdl-navigation__link" href="">Pedidos em Abertos</a>-->
+          <!--<a class="mdl-navigation__link" href="">Mapa de Localização</a>-->
+          <!--<a class="mdl-navigation__link" href="">Parceiros</a>-->
+          <!--<a class="mdl-navigation__link" href="">Conheça - nos</a>-->
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div ng-view=""></div>
+      </main>
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__left-section">
+          <div class="mdl-logo">Title</div>
+          <ul class="mdl-mini-footer__link-list">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Privacy & Terms</a></li>
+          </ul>
+        </div>
+      </footer>
+
+    </div>
+    </div>
+
+
+
+    <!--<script>-->
+       <!--!function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){-->
+       <!--(A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),-->
+       <!--r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)-->
+       <!--}(window,document,'script','https://www.google-analytics.com/analytics.js','ga');-->
+
+       <!--ga('create', 'UA-XXXXX-X');-->
+       <!--ga('send', 'pageview');-->
+    <!--</script>-->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/material-design-lite/material.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+
+    <!-- endbuild -->
+    <link rel="stylesheet" href="styles/material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+
+
+  </body>
+</html>

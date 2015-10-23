@@ -55,20 +55,21 @@ public class ControllerUtil extends Controller {
 	 * @param message - mensagem a ser anexada no envelope.
 	 * @param length - tamanho total da consulta quando for usar paginação.
 	 */
-	protected static void renderJSONSucesso(Object data, String message, Long length) {
+	protected static void renderJSONSucesso(Object data, String message, int length) {
 
 		renderJSON(gson.toJson(new EnvelopUtil(StatusEnum.SUCESSO, message, data, length)));
 
 	}
 
-	protected static void renderJSONGEOSucesso(Object data, String message, String... campos) {
+	protected static void renderJSONGEOSucesso(Object data, String message,int tamanho, String... campos) {
 
-		renderJSON(new JSONSerializer()
-				.include(campos)
-				.exclude("*")
-				.transform(new DateTransformer("dd/MM/yyyy"), Date.class)
-				.transform(new utils.transformer.GeometryTransformer(), Geometry.class)
-				.serialize(data));
+		renderJSON(gson.toJson(new EnvelopUtil(StatusEnum.SUCESSO,message,
+						new JSONSerializer()
+						.include(campos)
+						.exclude("*")
+						.transform(new DateTransformer("dd/MM/yyyy"), Date.class)
+						.transform(new utils.transformer.GeometryTransformer(), Geometry.class)
+						.serialize(data), tamanho)));
 
 
 	}	/**

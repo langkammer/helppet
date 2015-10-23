@@ -28,6 +28,7 @@ public class MessageUtil {
 
 	public static final String REDEFINICAO_SENHA_ENVIADA = "Foi Enviado para seu email detalhes para redefinição de sua conta!";
 
+	public static final String CADASTRO_REALIZADO_SUCESSO_P = "Cadastro de %s com Sucesso!";
 
 
 

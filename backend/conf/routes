@@ -11,3 +11,13 @@ GET     /public/                                staticDir:public
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+
+
+# USUARIO
+POST    /service/usuario/cadastro               UsuarioController.cadastrarUsuario
+POST    /service/usuario/recuperar              UsuarioController.esqueceuSenha
+GET     /service/usuario/listar                 UsuarioController.listarUsuarios
+POST    /service/usuario/deletar                UsuarioController.deletarUsuario
+
+# PEDIDO
+POST 	/service/pedido/buscaGps				PedidoController.buscarPedidoPorGps

@@ -4,12 +4,18 @@ import com.vividsolutions.jts.geom.Geometry;
 import enums.EnumFrequencia;
 import enums.EnumPedidoAjuda;
 import enums.TipoAnimal;
+import models.CoordenadaGps;
 import models.portalseg.UsuarioModel;
 import org.hibernate.annotations.Type;
 import play.db.jpa.GenericModel;
+import play.db.jpa.JPA;
+import utils.messages.MessageUtil;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Robson on 03/10/2015.
@@ -32,9 +38,13 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 	@JoinColumn(name = "ID_USUARIO")
 	public UsuarioModel usuario;
 
-	@OneToOne
-	@JoinColumn(name = "ID_FOTO")
-	public FotosModel foto;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "FOTO_PEDIDOS",
+			joinColumns = @JoinColumn(name = "ID_PEDIDO"),
+			inverseJoinColumns = @JoinColumn(name = "ID_FOTO")
+	)
+	@Valid
+	public List<FotosModel> fotos;
 
 	@Column(name="TIPO_ANIMAL")
 	@Enumerated
@@ -60,6 +70,14 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 	@Column(name="DATA_POSTAGEM")
 	public Date data;
+
+	public static List<PedidoAjudaModel> buscarLatLng(CoordenadaGps coordenada){
+		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint("+coordenada.lat+","+coordenada.lng+"), 4326), "+coordenada.distancia+"))";
+
+		//List lista = JPA.em().createQuery(sql).getResultList();
+
+		return JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
+	}
 
 //
 //	public List<Point> pontosPerto(Double lat, Double lng, Double distancia) throws FactoryException {

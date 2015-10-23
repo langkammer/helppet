@@ -38,9 +38,11 @@ public class UsuarioModel extends GenericModel implements Cloneable{
 	public String perfilFoto;
 
 	@Column(name="STATUS")
+	@Enumerated
 	public EnumUsuario status;
 
 	@Column(name="VINCULO")
+	@Enumerated
 	public EnumVinculado vinculo;
 
 	//public List<PedidoAjudaModel> listaAjuda;
@@ -51,6 +53,7 @@ public class UsuarioModel extends GenericModel implements Cloneable{
 	public String ultimaLocalizacao;
 
 	@Column(name="TIPO")
+	@Enumerated
 	public TipoUsuario tipo;
 
 	@Column(name="DATA")
