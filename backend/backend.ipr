@@ -25,7 +25,6 @@
     <file url="file://$PROJECT_DIR$/../frontend/app/scripts/app.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../frontend/app/styles/fonts_custom.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../frontend/app/styles/main.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../frontend/app/styles/page.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../frontend/app/styles/style_custom.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../frontend/app/views/main.html" charset="UTF-8" />
   </component>

@@ -92,19 +92,18 @@ body {
   margin-bottom: 40px;
   z-index: 900;
 }
-.img_cap{
-  border-bottom-color: #080808;
-}
-body {
-  background: url(../images/cao_capa.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 .letraCapa {
   color: white;
   margin-top: 40px;
   margin-left: 25px;
   border-color: #250404;
+}
+
+
+.container {
+
+  width: 1024px;
+  background-color: white;
+  padding: 0px;
+
 }

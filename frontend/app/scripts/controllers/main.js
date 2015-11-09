@@ -10,5 +10,7 @@
 angular.module('frontendApp')
   .controller('MainCtrl', function () {
 
-      console.log("main");
+
+
+
   });
