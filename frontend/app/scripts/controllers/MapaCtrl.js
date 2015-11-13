@@ -8,9 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('MainCtrl', function () {
+  .controller('MapaCtrl', function () {
 
-
-
-
+      console.log("mapa");
   });
