@@ -14,10 +14,22 @@ GET     /public/                                staticDir:public
 
 
 # USUARIO
-POST    /service/usuario/cadastro               UsuarioController.cadastrarUsuario
-POST    /service/usuario/recuperar              UsuarioController.esqueceuSenha
-GET     /service/usuario/listar                 UsuarioController.listarUsuarios
-POST    /service/usuario/deletar                UsuarioController.deletarUsuario
+POST    /service/usuario/cadastro              					 UsuarioController.cadastrarUsuario
+POST    /service/usuario/recuperar              				 UsuarioController.esqueceuSenha
+GET     /service/usuario/listar                 				 UsuarioController.listarUsuarios
+POST    /service/usuario/deletar                				 UsuarioController.deletarUsuario
+POST    /service/usuario/logar	                				 UsuarioController.logar
+GET     /service/usuario/{idRedeSocial}/verificar          		 UsuarioController.verificarRedeSocial
+
+
 
 # PEDIDO
 POST 	/service/pedido/buscaGps				PedidoController.buscarPedidoPorGps
+POST 	/service/pedido/buscaPorEndereco		PedidoController.buscarPedidosPorEndereco
+POST 	/service/pedido/cadastrarPedido			PedidoController.cadastrarPedido
+POST 	/service/pedido/filtrarPedidos			PedidoController.listarPedidos
+
+
+# GENERICO
+GET		/service/generico/{uf}/listaCidades		GenericosController.listarCidadesByUf
+

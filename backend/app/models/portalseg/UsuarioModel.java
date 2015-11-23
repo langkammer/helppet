@@ -25,6 +25,10 @@ public class UsuarioModel extends GenericModel implements Cloneable{
 	@Column(columnDefinition = "serial")
 	public Long id;
 
+
+	@Column(name="ID_SOCIAL")
+	public Long idSocial;
+
 	@Column(name="NOME")
 	public String nome;
 

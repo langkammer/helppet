@@ -5,6 +5,11 @@
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/MainCtrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/MapaCtrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/PedidoCtrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/controllers/PerfilCtrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/directive/AlertService.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/service/PedidoService.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/service/UsuarioService.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/utils/DateFormatUtil.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/creative.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/grayscale.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/main.css" charset="UTF-8" />
@@ -15,8 +20,10 @@
     <file url="file://$PROJECT_DIR$/app/views/layout/menu.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/main.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/mapa.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/novo-pedido.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/pedido.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/views/principal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/perfil.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bower.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/package.json" charset="UTF-8" />
   </component>
 </project>

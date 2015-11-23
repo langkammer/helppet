@@ -7,8 +7,7 @@ public enum TipoAnimal {
 
 	CAES(0, "Cães"),
 	GATOS(1, "Gatos"),
-	CAVALOS(2, "Cavalos"),
-	ASNOS(2, "Asnos, Burros, Jumento, Jegue");
+	OUTROS(2, "Outros");
 
 	private Integer id;
 	private String name;

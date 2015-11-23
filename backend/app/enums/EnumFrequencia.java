@@ -5,9 +5,9 @@ package enums;
  */
 public enum EnumFrequencia {
 
-	BLOQUEADO(0, "1 vez"),
-	ATIVO(1, "2 vezes"),
-	INATIVO(2, "3 vezes ou mais");
+	UMA(0, "1 vez"),
+	DUAS(1, "2 vezes"),
+	TRES(2, "3 vezes ou mais");
 
 	private Integer id;
 	private String name;

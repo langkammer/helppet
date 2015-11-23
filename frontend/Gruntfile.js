@@ -1,13 +1,16 @@
-// Generated on 2015-10-22 using generator-angular 0.12.1
+// Generated on 2015-10-30 using generator-angular 0.12.1
 'use strict';
 
 // # Globbing
-// for performance reasons we're only matching one level down:
+// for performance reasons we're only mat ing one level down:
 // 'test/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
+  // Load grunt tasks automatically
+  grunt.loadNpmTasks('grunt-connect-proxy');
+
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
@@ -18,8 +21,8 @@ module.exports = function (grunt) {
     cdnify: 'grunt-google-cdn'
   });
 
+
   // Configurable paths for the application
-  // Project settings
   var appConfig = {
 
     // Diretorio de desenvolvimento do front-end
@@ -35,11 +38,27 @@ module.exports = function (grunt) {
     backend: '../backend/public/app'
 
   };
+  //var appConfig = {
+  //
+  //  // Diretorio de desenvolvimento do front-end
+  //  app: require('./bower.json').appPath || 'app',
+  //
+  //  //Diretorio para conectar utilizando o live
+  //  views:'app/views/',
+  //
+  //  //Diretorio de distribuilção do app, este diretorio é criado na pasta de front-end. está pasta pode ser copiada para o diretorio final de produção pois já está funcionando.
+  //  dist: 'dist',
+  //
+  //  //Diretorio play onde será enviado o front-end sem nenhuma dependencia do play para manipulação do html.
+  //  backend: '../backend/public/app'
+  //
+  //};
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-    yeoman: appConfig,
 
+    // Project settings
+    yeoman: appConfig,
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -48,7 +67,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        files: ['<%= yeoman.app %>/scripts/**/*.js'],
         tasks: ['newer:jshint:all'],
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -58,10 +77,6 @@ module.exports = function (grunt) {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
-      styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-        tasks: ['newer:copy:styles', 'autoprefixer']
-      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
@@ -70,9 +85,9 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.app %>/**/*.html',
+          '<%= yeoman.app %>/styles/**/*.css',
+          '<%= yeoman.app %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
@@ -81,15 +96,16 @@ module.exports = function (grunt) {
     connect: {
       options: {
         port: 3000,
-        // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
         livereload: 35729
       },
-      proxies: [{
-        context: '/service',
-        host: 'localhost',
-        port: 9000
-      }],
+      proxies: [
+        {
+          context: '/service',
+          host: 'localhost',
+          port: 9000
+        }
+      ],
       livereload: {
         options: {
           open: true,
@@ -100,27 +116,8 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect().use(
-                '/app/styles',
-                connect.static('./app/styles')
-              ),
-              connect.static(appConfig.app)
-            ];
-          }
-        }
-      },
-      test: {
-        options: {
-          port: 9001,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect.static('test'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              require('grunt-connect-proxy/lib/utils').proxyRequest
             ];
           }
         }
@@ -132,7 +129,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -142,28 +138,49 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/controllers/*.js',
+          '<%= yeoman.app %>/scripts/services/*.js',
         ]
       },
       test: {
         options: {
           jshintrc: 'test/.jshintrc'
         },
-        src: ['test/spec/{,*/}*.js']
+        src: ['test/spec/**/*.js']
       }
     },
 
     // Empties folders to start fresh
     clean: {
       dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            '<%= yeoman.dist %>/{,*/}*',
-            '!<%= yeoman.dist %>/.git{,*/}*'
-          ]
-        }]
+        files: [
+          {
+            dot: true,
+            src: [
+              '.tmp',
+              '<%= yeoman.dist %>/**/*',
+              '!<%= yeoman.dist %>/.git*'
+            ]
+          }
+        ]
+      },
+      backend: {
+
+        options: {
+          force: true
+        },
+
+        files: [
+          {
+            dot: true,
+            src: [
+              '.tmp',
+              '<%= yeoman.backend %>/*',
+              '!<%= yeoman.backend %>/.git*'
+            ]
+          }
+        ]
+
       },
       server: '.tmp'
     },
@@ -185,12 +202,14 @@ module.exports = function (grunt) {
         }]
       },
       dist: {
-        files: [{
-          expand: true,
-          cwd: '.tmp/styles/',
-          src: '{,*/}*.css',
-          dest: '.tmp/styles/'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp/styles/',
+            src: '**/*.css',
+            dest: '.tmp/styles/'
+          }
+        ]
       }
     },
 
@@ -207,24 +226,26 @@ module.exports = function (grunt) {
         fileTypes:{
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
             }
           }
+        }
       }
     },
+
+    // Compiles Sass to CSS and generates necessary files if requested
 
     // Renames files for browser caching purposes
     filerev: {
       dist: {
         src: [
-          '<%= yeoman.dist %>/scripts/{,*/}*.js',
-          '<%= yeoman.dist %>/styles/{,*/}*.css',
-          '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.dist %>/scripts/**/*.js',
+          '<%= yeoman.dist %>/styles/**/*.css',
+          '<%= yeoman.dist %>/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
           '<%= yeoman.dist %>/styles/fonts/*'
         ]
       }
@@ -292,25 +313,16 @@ module.exports = function (grunt) {
     //   dist: {}
     // },
 
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-
     svgmin: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/images',
+            src: '**/*.svg',
+            dest: '<%= yeoman.dist %>/images'
+          }
+        ]
       }
     },
 
@@ -320,21 +332,36 @@ module.exports = function (grunt) {
           collapseWhitespace: true,
           conservativeCollapse: true,
           collapseBooleanAttributes: true,
-          removeCommentsFromCDATA: true
+          removeCommentsFromCDATA: true,
+          removeOptionalTags: true
         },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: ['*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.dist %>',
+            src: ['*.html', 'views/**/*.html'],
+            dest: '<%= yeoman.dist %>'
+          }
+        ]
+      }
+    },
+    ngmin: {
+      dist: {
+        files: [
+          {
+            expand: true,
+            cwd: '.tmp/concat/scripts',
+            src: '*.js',
+            dest: '.tmp/concat/scripts'
+          }
+        ]
       }
     },
 
     ngtemplates: {
       dist: {
         options: {
-          module: 'frontendApp',
+          module: 'taskbookApp',
           htmlmin: '<%= htmlmin.dist.options %>',
           usemin: 'scripts/scripts.js'
         },
@@ -367,35 +394,67 @@ module.exports = function (grunt) {
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
-          ]
-        }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: ['generated/*']
-        }, {
-          expand: true,
-          cwd: 'bower_components/bootstrap/dist',
-          src: 'fonts/*',
-          dest: '<%= yeoman.dist %>'
-        }]
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.app %>',
+            dest: '<%= yeoman.dist %>',
+            src: [
+              '*.{ico,png,txt}',
+              '.htaccess',
+              '*.html',
+              'views/**/*.html',
+              'images/**/*.{webp}',
+              'fonts/*'
+            ]
+          },
+          {
+            expand: true,
+            cwd: '.tmp/images',
+            dest: '<%= yeoman.dist %>/images',
+            src: ['generated/*']
+          },
+          {
+            expand: true,
+            cwd: 'app/bower_components/bootstrap/dist',
+            src: 'fonts/*',
+            dest: '<%= yeoman.dist %>'
+          },
+          {
+            expand: true,
+            dot: true,
+            cwd: 'bower_components/fontawesome',
+            src: ['fonts/*.*'],
+            dest: '<%= yeoman.dist %>'
+          }
+
+        ]
       },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+        src: '**/*.css'
+      },
+      //Rotina de copia da pasta dist para o backend.
+      backend: {
+
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.dist %>',
+            dest: '<%= yeoman.backend %>',
+            src: '**/*.*'
+          },
+          {
+            expand: true,
+            cwd: '.tmp/images',
+            dest: '<%= yeoman.backend %>/images',
+            src: ['generated/*']
+          }
+        ]
       }
     },
 
@@ -433,11 +492,20 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
   });
 
+  grunt.registerTask('play', [
+
+    'newer:jshint',
+    'build-play',
+    'clean:backend',
+    'copy:backend'
+
+  ]);
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
@@ -455,18 +523,30 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
-    'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
-    'ngtemplates',
     'concat',
-    'ngAnnotate',
     'copy:dist',
     'cdnify',
     'cssmin',
     'uglify',
-    'filerev',
-    'usemin'
+    'filerev'
+  ]);
+
+
+  grunt.registerTask('build-play', [
+    'clean:dist',
+    'wiredep',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'concat',
+    'ngmin',
+    'copy:dist',
+    'cssmin',
+    'uglify',
+    'usemin',
+    'htmlmin'
   ]);
 
   grunt.registerTask('default', [

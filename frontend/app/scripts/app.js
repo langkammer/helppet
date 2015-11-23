@@ -8,9 +8,8 @@
  *
  * Main module of the application.
  */
-angular
-  .module('frontendApp', [
-    'ngAnimate',
+var app = angular.module('frontendApp',
+  [ 'ngAnimate',
     'ngAria',
     'ngCookies',
     'ngMessages',
@@ -18,7 +17,12 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'leaflet-directive',
+    'ngFileUpload',
+    'flow',
+    'facebook'
+
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -41,6 +45,14 @@ angular
       .when('/contato', {
         templateUrl: 'views/contato.html',
         controller: 'MainCtrl'
+      })
+      .when('/perfil', {
+        templateUrl: 'views/perfil.html',
+        controller: 'PerfilCtrl'
+      })
+      .when('/novo-pedido', {
+        templateUrl: 'views/novo-pedido.html',
+        controller: 'PedidoCtrl'
       })
       .otherwise({
         redirectTo: '/'

@@ -1,8 +1,8 @@
 package controllers;
 
+import enums.TipoAnimal;
 import models.CoordenadaGps;
 import models.helppet.PedidoAjudaModel;
-import models.portalseg.UsuarioModel;
 import utils.ControllerUtil;
 import utils.messages.MessageUtil;
 
@@ -48,5 +48,41 @@ public class PedidoController extends ControllerUtil {
         }
 
     }
+
+    public static void cadastrarPedido(PedidoAjudaModel pedido){
+
+        try{
+
+            if(pedido == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"pedido"));
+
+
+        }
+        catch (Exception e){
+            renderJSONError(MessageUtil.ERRO_PADRAO);
+
+        }
+
+    }
+
+    public static void listarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem){
+
+        try{
+
+            List<PedidoAjudaModel> listaPedido = new PedidoAjudaModel().filtrarPedidos(lat,lng,tipoAnimal,raio,codigoMunicipio,ordem);
+
+            if(listaPedido==null || listaPedido.size() < 1)
+                renderJSONSucesso("Consulta Vazia!");
+
+            if(listaPedido!=null)
+                renderJSONGEOSucesso(listaPedido, "Consulta Correta!",listaPedido.size(), "geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
+        }
+        catch (Exception e){
+            renderJSONError(MessageUtil.ERRO_PADRAO);
+
+        }
+
+    }
+
 
 }

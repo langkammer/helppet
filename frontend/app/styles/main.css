@@ -119,6 +119,10 @@
 
 
 }
+.espacamento3 {
+  margin-right: 50px;
+  margin-left: 50px;
+}
 .carousel-control.left, .carousel-control.right {
   background-image: none
 }
@@ -139,4 +143,10 @@
 .carousel-inner {
   position: relative;
   width: 100%;
+}
+.drop {
+  padding: 15px;
+  border: 2px #f1f1f1 dashed;
+  border-radius: 5px;
+  line-height: 34px;
 }
