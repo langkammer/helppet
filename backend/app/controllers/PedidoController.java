@@ -56,7 +56,7 @@ public class PedidoController extends ControllerUtil {
 
             if(pedido == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"pedido"));
-
+            renderJSONGEOSucesso(pedido.salvarPedido(lat,lng), "Pedido Salvo com Sucesso!",0, "geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
 
         }
         catch (Exception e){

@@ -1,6 +1,8 @@
 package models.helppet;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import enums.EnumFrequencia;
 import enums.EnumPedidoAjuda;
 import enums.TipoAnimal;
@@ -62,6 +64,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 	@Type(type = "org.hibernate.spatial.GeometryType")
 	@Column(name = "GEO", nullable = true)
+	@NotNull
 	public Geometry geo;
 
 	@Column(name="OBSERVACAO")
@@ -134,6 +137,15 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 	}
 
+	public PedidoAjudaModel salvarPedido(String lat, String lng){
+
+
+		Geometry geo =  new GeometryFactory().createPoint(new Coordinate(Double.parseDouble(lng),Double.parseDouble(lat)));
+		geo.setSRID(4326);
+		this.geo = geo;
+		return this.save();
+
+	}
 //
 //	public List<Point> pontosPerto(Double lat, Double lng, Double distancia) throws FactoryException {
 //
