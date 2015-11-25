@@ -143,6 +143,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 		Geometry geo =  new GeometryFactory().createPoint(new Coordinate(Double.parseDouble(lng),Double.parseDouble(lat)));
 		geo.setSRID(4326);
 		this.geo = geo;
+		this.status = EnumPedidoAjuda.AGUARDANDO;
 		return this.save();
 
 	}
