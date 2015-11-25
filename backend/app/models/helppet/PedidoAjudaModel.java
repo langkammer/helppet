@@ -13,6 +13,7 @@ import play.db.jpa.JPA;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 	@OneToOne
 	@JoinColumn(name = "ID_USUARIO")
+	@NotNull
 	public UsuarioModel usuario;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -55,6 +57,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 	@Column(name="TIPO_ANIMAL")
 	@Enumerated
+	@NotNull
 	public TipoAnimal tipoAnimal;
 
 	@Type(type = "org.hibernate.spatial.GeometryType")

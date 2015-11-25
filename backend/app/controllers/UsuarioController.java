@@ -18,7 +18,7 @@ public class UsuarioController extends ControllerUtil {
             if(usuario == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"usuario"));
             if(usuario != null)
-                renderJSONSucesso(usuario.save(),String.format(MessageUtil.CADASTRO_REALIZADO_SUCESSO_P,"Usuario"),0 );
+                renderJSONSucesso(usuario.salvarUsuario(),String.format(MessageUtil.CADASTRO_REALIZADO_SUCESSO_P,"Usuario"),0 );
         }
         catch (Exception e){
             renderJSONError(MessageUtil.ERRO_PADRAO);
@@ -27,28 +27,40 @@ public class UsuarioController extends ControllerUtil {
 
     }
 
-    public static void logar(String usuario, String senha){
+    public static void logar(String login, String senha){
 
         try{
 
-            if(usuario==null)
+            if(login==null)
                 renderJSONError("Usuario em Branco");
             if(senha==null)
                 renderJSONError("Senha em Branco");
 
-            UsuarioModel user = UsuarioModel.find("senha = :senha and email = :email")
-                                            .setParameter("email", usuario)
+            UsuarioModel usuario = UsuarioModel.find("senha = :senha and email = :email")
+                                            .setParameter("email", login)
                                             .setParameter("senha", senha)
                                             .first();
 
-            if(user!=null){
-                session.put("usuario",user.id);
-                user.senha = null;
-                renderJSONSucesso("Logado com Sucesso",usuario,0);
+            if(usuario!=null){
+                session.put("usuario",usuario.id);
+                usuario.senha = null;
+                renderJSONSucesso(usuario,"Logado com Sucesso",0);
             }
 
-            if(user==null)
+            if(usuario==null)
                 renderJSONError("Usuario ou senha digitados não existem");
+        }
+        catch (Exception e){
+
+        }
+    }
+
+    public static void deslogar(){
+
+        try{
+
+                session.clear();
+                renderJSONSucesso("Usuario Deslogado");
         }
         catch (Exception e){
 
@@ -75,7 +87,7 @@ public class UsuarioController extends ControllerUtil {
             if(idRedeSocial != null) {
                 UsuarioModel user = UsuarioModel.find("idSocial = :idSocial").setParameter("idSocial", idRedeSocial).first();
                 if(user!=null)
-                    renderJSONSucesso(UsuarioModel.find("idSocial"),String.format(MessageUtil.CADASTRO_REALIZADO_SUCESSO_P,"Usuario"),0 );
+                    renderJSONSucesso(user,String.format(MessageUtil.CONSULTA_REALIZADA_SUCESSO,"Usuario"),0 );
                 else
                     renderJSONSucesso("Nenhum Usuario Cadastrado");
             }

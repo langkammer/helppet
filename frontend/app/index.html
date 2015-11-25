@@ -107,7 +107,9 @@
         <script src="scripts/utils/DateFormatUtil.js"></script>
         <script src="scripts/externo/ng-flow/dist/ng-flow-standalone.min.js"></script>
         <script src="scripts/directive/FacebookConfig.js"></script>
-
+        <script src="scripts/externo/crypto-js/crypto-js.js"></script>
+        <script src="scripts/utils/ArrayUtils.js"></script>
+        <script src="scripts/directive/UploadFactory.js"></script>
 
 
 
@@ -130,14 +132,31 @@
             <li ng-class="{'active': menu == '/contato'}"><a href="#/contato">Contato</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <button class="mdl-button mdl-js-button mdl-button--accent" ng-click="cadastrar()">Junte se a nós</button>
-            <button class="mdl-button mdl-js-button mdl-button--primary" ng-click="login()">Login</button>
-            <img src="https://graph.facebook.com/924756687611720/picture?type=large" height="50px" width="50px">
+            <div class="nav navbar-nav" id="barraLogin" ng-hide="usuario">
+              <button class="mdl-button mdl-js-button mdl-button--accent" ng-click="cadastrar()">Junte se a nós</button>
+              <button class="mdl-button mdl-js-button mdl-button--primary" ng-click="login()">Login</button>
+            </div>
+            <div class="nav navbar-nav" id="barraPerfil" >
+              <img ng-if="usuario.idSocial" ng-src="https://graph.facebook.com/{{usuario.idSocial}}/picture?type=large" height="50px" width="50px" class="img-circle">
+              <img ng-if="usuario.perfilFoto" src="images/{{usuario.perfilFoto}}" height="50px" width="50px" class="img-circle">
+              {{usuario.nome}}
+            </div>
+            <ul class="nav navbar-nav" ng-show="usuario">
+              <li ng-class="{'active': menu == '/perfil'}"><a href="#/perfil">Meu Perfil </a></li>
+              <li style="margin-top: 12px"><i class="material-icons" ng-click="logout()"> exit_to_app</i></li>
+
+            </ul>
+
           </ul>
         </div>
       </div>
     </nav>
-
+    <!-- notificação -->
+    <div ng-show="usuario && !usuario.email" class="alert alert-danger alert-dismissible espacamento espacamento3" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Email!</strong> Por Favor informe o seu endereço de email.
+      <a href="#/perfil" class="btn btn-link">Por favor atualize seu email</a>
+    </div>
 
     <div class="espacamento" ng-view=""></div>
 
@@ -191,15 +210,18 @@
                 <input type="password" class="form-control" id="senha" placeholder="Senha" ng-model="user.senha">
                 <label for="senha2">Repita sua Senha</label>
                 <input type="password" class="form-control" id="senha2" placeholder="Senha" ng-model="user.senha2">
+                <p></p>
+                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="logarRedesocial('FACEBOOK')"><i class="fa fa-facebook-official"></i> &nbsp; Use o Facebook se Cadastrar</button>
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary" ng-hide="user.senha != user.senha2 || !user.senha || !user.senha">Cadastrar-Se</button>
+            <button type="button" class="btn btn-primary" ng-hide="user.senha != user.senha2 || !user.senha || !user.senha" ng-click="salvarUser()">Cadastrar-Se</button>
           </div>
         </div>
       </div>
     </div>
+
   </body>
 </html>

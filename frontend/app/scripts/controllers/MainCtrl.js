@@ -8,16 +8,21 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('MainCtrl', function ($scope,$location,Mensagem,UsuarioService,SessaoArmazenacao,Facebook) {
+  .controller('MainCtrl', function ($scope,$location,Mensagem,UsuarioService,SessaoArmazenacao,Facebook,$rootScope) {
 
-    if(SessaoArmazenacao.getSessao())
+    if(SessaoArmazenacao.getSessao()){
       $scope.$parent.usuario  = SessaoArmazenacao.getSessao();
+    }
+    else{
+      $scope.$parent.usuario = null;
+    }
 
     function montaObjeto(vinculo,user){
       var objetoUsuarioDevolvido = {};
       if(vinculo=='FACEBOOK'){
         objetoUsuarioDevolvido.nome = user.nome;
         objetoUsuarioDevolvido.vinculo = vinculo;
+        objetoUsuarioDevolvido.idSocial =user.idVinculoFacebook;
       }
       else{
         objetoUsuarioDevolvido = user;
@@ -29,9 +34,7 @@ angular.module('frontendApp')
       return objetoUsuarioDevolvido;
     }
     function salvarUsuario(tip,user){
-
-      if(verificarRedeSocial(user.idVinculoFacebook)){
-        var objetoSalv = montaObjeto(tip,user);
+      var objetoSalv = montaObjeto(tip,user);
 
         UsuarioService.salvarUsuario({usuario : objetoSalv},function (data) {
           if (data.status == 'e') {
@@ -39,24 +42,35 @@ angular.module('frontendApp')
           } else {
 
             SessaoArmazenacao.setSessao(data.data);
+            $('#LoginModal').modal('hide');                // initializes and invokes show immediately as
             $location.path("/perfil");
 
 
           }
         });
 
-      }
-
     }
 
-    function verificarRedeSocial(idRedeSocial){
-      UsuarioService.verificarRedeSocial(idRedeSocial,function (data) {
+    function verificarRedeSocial(user){
+      UsuarioService.verificarRedeSocial(user.idVinculoFacebook,function (data) {
         if (data.status == 'e') {
-          Mensagem.exibir(data.message, 'error')
-          return data.data;
+          return false;
 
         } else {
-          return data.data.idSocial;
+          if(data.data instanceof Object){
+              //caso exista login associado a rede social  será logado com ela
+              SessaoArmazenacao.setSessao(data.data);
+              $('#LoginModal').modal('hide');
+              $location.path("/perfil");
+
+          }
+          else{
+              //criando usuario caso não exista
+              salvarUsuario('FACEBOOK',user);
+
+
+          }
+
         }
       });
     }
@@ -86,16 +100,16 @@ angular.module('frontendApp')
 
     $scope.$parent.menu = $location.path();
 
-    $scope.$parent.login = function () {
-      $('#LoginModal').modal('show')                // initializes and invokes show immediately
+    $rootScope.login = function () {
+      $('#LoginModal').modal('show');                // initializes and invokes show immediately
 
     };
-    $scope.$parent.cadastrar = function () {
-      $('#CadastrarUsuario').modal('show')                // initializes and invokes show immediately
+    $rootScope.cadastrar = function () {
+      $('#CadastrarUsuario').modal('show');                // initializes and invokes show immediately
 
     };
 
-    $scope.$parent.reenviarSenha = function () {
+    $rootScope.reenviarSenha = function () {
 
       if($scope.login.user){
         Mensagem.exibir("Senha Reenviada Com sucesso no seu email","success");
@@ -106,42 +120,70 @@ angular.module('frontendApp')
       }
 
     };
-    $scope.$parent.cadastrar = function () {
+    $rootScope.salvarUser = function () {
 
       //verifica validações de preenchimento
       salvarUsuario(null,$scope.user);
     };
 
-    $scope.$parent.logarRedesocial = function (provedor) {
+    $rootScope.logarRedesocial = function (provedor) {
+        // From now on you can use the Facebook service just as Facebook api says
+        Facebook.login(function(response) {
+          // Do something with response.
+          Facebook.api('/me', function(response) {
+            if(response!=null){
+              var user = {
+                idVinculoFacebook : response.id,
+                nome : response.name
+              };
+              verificarRedeSocial(user);
 
-      Facebook.api('/me', function(response) {
-        if(response!=null){
-          var user = {
-            idVinculoFacebook : response.id,
-            nome : response.name
-          }
-          salvarUsuario('FACEBOOK',user);
 
-        }
+            }
 
 
-      });
+          });
+
+        });
+
 
     };
 
-    $scope.$parent.logar = function () {
+    $rootScope.logar = function () {
 
       UsuarioService.logar({login : $scope.login.user, senha : CryptoJS.SHA1($scope.login.pass).toString()},function (data) {
         if (data.status == 'e') {
-          Mensagem.exibir(data.message, 'error')
+          Mensagem.exibir(data.message, 'error');
         } else {
 
+          $('#LoginModal').modal('hide');                // initializes and invokes show immediately as
           SessaoArmazenacao.setSessao(data.data);
           $location.path("/perfil");
 
 
         }
       });
+
+    };
+
+    $rootScope.logout = function(){
+
+        UsuarioService.deslogar(function (data) {
+          if (data.status == 'e') {
+            Mensagem.exibir(data.message, 'error');
+          } else {
+            if($scope.usuario.idSocial)
+              Facebook.logout();
+
+            SessaoArmazenacao.limparSessao();
+            Mensagem.exibir(data.message, 'success');
+            $location.path("/");
+
+
+          }
+        });
+
+
 
     };
 

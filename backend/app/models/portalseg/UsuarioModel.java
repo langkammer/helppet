@@ -62,4 +62,12 @@ public class UsuarioModel extends GenericModel implements Cloneable{
 
 	@Column(name="DATA")
 	public Date data;
+
+	public UsuarioModel salvarUsuario(){
+		this.data = new Date();
+		this.perfilFoto = "padraofoto.jpeg";
+		this.status = EnumUsuario.ATIVO;
+		return this.save();
+	}
+
 }

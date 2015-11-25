@@ -8,9 +8,12 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('MapaCtrl', function ($scope,$location) {
+  .controller('MapaCtrl', function ($scope,$location,SessaoArmazenacao) {
 
       console.log("mapa");
+
+    if(SessaoArmazenacao.getSessao())
+      $scope.$parent.usuario  = SessaoArmazenacao.getSessao();
 
     $scope.$parent.menu = $location.path();
 
@@ -27,9 +30,9 @@ angular.module('frontendApp')
     //};
     angular.extend($scope, {
       center: {
-        lat: 51.505,
-        lng: -0.09,
-        zoom: 30
+        lat: -19.922681,
+        lng: -43.944540,
+        zoom: 15
       }
     });
   });

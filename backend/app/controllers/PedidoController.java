@@ -6,6 +6,7 @@ import models.helppet.PedidoAjudaModel;
 import utils.ControllerUtil;
 import utils.messages.MessageUtil;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -49,7 +50,7 @@ public class PedidoController extends ControllerUtil {
 
     }
 
-    public static void cadastrarPedido(PedidoAjudaModel pedido){
+    public static void cadastrarPedido(PedidoAjudaModel pedido, String lat, String lng){
 
         try{
 

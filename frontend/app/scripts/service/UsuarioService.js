@@ -37,6 +37,12 @@
         request.postFormEncoded('usuario/logar', data, successCallback, errorCallback);
 
       }
+      ,
+      deslogar: function (successCallback, errorCallback) {
+
+        request.get('usuario/deslogar', successCallback, errorCallback);
+
+      }
     };//fim return
 
   });//fim service

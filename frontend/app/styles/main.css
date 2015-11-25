@@ -122,6 +122,8 @@
 .espacamento3 {
   margin-right: 50px;
   margin-left: 50px;
+  margin-bottom: 10px;
+
 }
 .carousel-control.left, .carousel-control.right {
   background-image: none

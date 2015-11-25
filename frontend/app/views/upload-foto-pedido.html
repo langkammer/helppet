@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Por favor selecione pelo menos uma imagem e no maximo 5 fotos do animal</h4>
+      <h5>Imagens Aceitas : JPG, JPEG, PNG, BMP</h5>
+      <div flow-init="" flow-files-submitted="$flow.upload()" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" class="ng-scope">
+        <div class="drop" flow-drop="" ng-class="dropClass">
+          <span class="btn btn-default" flow-btn="">Upload Imagen<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+          <b>Ou</b>
+          Arraste e Solte Aqui
+        </div>
+
+        <br>
+
+        <div>
+
+          <!-- ngRepeat: file in $flow.files -->
+          <div ng-repeat="file in $flow.files" class="gallery-box ng-scope col-md-3">
+            <div class="thumbnail" ng-show="$flow.files.length">
+              <img flow-img="file">
+            </div>
+            <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+              <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (file.progress() * 100) + '%'}" style="width: 100%;">
+                <span class="sr-only ng-binding">1% Complete</span>
+              </div>
+            </div>
+            <div class="btn-group">
+              <a class="btn btn-xs btn-danger" ng-click="file.cancel()">
+                Remover
+              </a>
+            </div>
+          </div><!-- end ngRepeat: file in $flow.files -->
+          <div class="clear"></div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

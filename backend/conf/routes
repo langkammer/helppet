@@ -20,6 +20,7 @@ GET     /service/usuario/listar                 				 UsuarioController.listarUsu
 POST    /service/usuario/deletar                				 UsuarioController.deletarUsuario
 POST    /service/usuario/logar	                				 UsuarioController.logar
 GET     /service/usuario/{idRedeSocial}/verificar          		 UsuarioController.verificarRedeSocial
+GET   	/service/usuario/deslogar               				 UsuarioController.deslogar
 
 
 
