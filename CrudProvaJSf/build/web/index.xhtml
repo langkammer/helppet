@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Gerenciamento de Usuario</title>
+    </h:head>
+    <h:body>
+        <h:panelGrid columns="1" cellpadding="5">
+            <p:commandButton value="Basic" type="button" onclick="PF('modalCadastro').show();" />
+        </h:panelGrid>
+        <p:dataTable id="tabela" var="u" value="#{usuarioBean.listarUsuarios}" emptyMessage="Nenhum Dado Cadastrado">
+            <p:column headerText="Nome">
+                <h:outputText value="#{u.pessoa.nome}" />
+            </p:column>
+
+            <p:column headerText="Cpf">
+                <h:outputText value="#{u.pessoa.cpf}" />
+            </p:column>
+
+            <p:column headerText="Data Nascimento">
+                <h:outputText value="#{u.pessoa.nascimento}" />
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                                <h:outputText value="Excluir"/>
+                </f:facet>
+                <h:commandLink action="#{usuarioBean.excluirUsuario}" value="Excluir"/>
+            </p:column>
+        </p:dataTable>
+        <p:dialog header="Cadastro de Usuario" widgetVar="modalCadastro" modal="true" showEffect="explode" hideEffect="bounce" >
+            <h:panelGrid columns="2" cellpadding="15">
+                <p:outputLabel for="nome" value="Nome :" />
+                <p:inputText id="nome" value="#{usuarioBean.usuario.pessoa.nome}"/>
+                <p:outputLabel for="cpf" value="Cpf :" />
+                <p:inputMask id="cpf" value="#{usuarioBean.usuario.pessoa.cpf}" mask="99.999.999.99"/>
+                <p:outputLabel for="popup" value="Data Nascimento" />
+                <p:calendar id="popup" value="#{usuarioBean.usuario.pessoa.nascimento}" showOn="button" />
+                <p:outputLabel for="rua" value="Rua :" />
+                <p:inputText id="rua" value="#{usuarioBean.usuario.pessoa.endereco.rua}"/>
+                <p:outputLabel for="bairro" value="Bairro :" />
+                <p:inputText id="bairro" value="#{usuarioBean.usuario.pessoa.endereco.bairro}"/>
+                <p:outputLabel for="telefone" value="Telefone :" />
+                <p:inputText id="telefone" value="#{usuarioBean.usuario.pessoa.endereco.telefone}"/>
+                <p:outputLabel for="login" value="Login :" />
+                <p:inputText id="login" value="#{usuarioBean.usuario.login}"/>
+                <p:outputLabel for="senha" value="Senha :" />
+                <p:password id="senha"  value="#{usuarioBean.usuario.senha}"/>
+                <p:commandButton update="tabela" oncomplete="modalCadastro.hide();" actionListener="#{usuarioBean.adicionarLivro}" value="Cadastrar Usuario"/>
+                <p:commandButton update="tabela" oncomplete="modalCadastro.hide();" actionListener="#{usuarioBean.alterarUsuario}" value="Alterar Usuario"/>
+            </h:panelGrid>
+        </p:dialog>   
+    </h:body>
+
+
+</html>
+
