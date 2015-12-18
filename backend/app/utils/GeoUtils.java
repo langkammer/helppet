@@ -40,6 +40,24 @@ public class GeoUtils {
 
 
 	}
+	public static String juntaNumeros(String num){
+		String resultado = null;
+
+		if(num.split("\\.")[0]!=null){
+			resultado = num.split("\\.")[0];
+		}
+		if(num.split("\\.").length >= 1){
+			if(num.split("\\.")[1]!=null ){
+				resultado += "." + num.split("\\.")[1];
+			}
+		}
+		if(num.split("\\.").length >= 3){
+			if(num.split("\\.")[2]!=null){
+				resultado += "" + num.split("\\.")[2];
+			}
+		}
+		return resultado;
+	}
 	/**
 	 * 
 	 */

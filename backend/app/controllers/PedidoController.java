@@ -2,6 +2,7 @@ package controllers;
 
 import enums.TipoAnimal;
 import models.CoordenadaGps;
+import models.base.MunicipioModel;
 import models.helppet.PedidoAjudaModel;
 import utils.ControllerUtil;
 import utils.messages.MessageUtil;
@@ -133,5 +134,10 @@ public class PedidoController extends ControllerUtil {
         catch (Exception e){
             renderJSONError("ERRO AO LOCALIZAR FOTO");
         }
+    }
+
+    public static void gerarDadosCidades(){
+        new MunicipioModel().listarCidades();
+       renderJSONSucesso(null,"CONSULTA CORRETA",0);
     }
 }

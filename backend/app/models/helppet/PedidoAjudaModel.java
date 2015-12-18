@@ -106,10 +106,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 	public static List<PedidoAjudaModel> filtrarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem, Long pagina){
 
-		if(lat==null)
-			lat = -43.944540;
-		if(lng==null)
-			lng = -19.922681;
+
 
 		if(raio.isEmpty() || Integer.parseInt(raio) == 0){
 			raio = "1.00000"; // padrao caso o raio não venha será de 100 km
@@ -121,8 +118,30 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 		if(tipoAnimal==null)
 			tipoAnimal = TipoAnimal.CAES; // por padrão é sempre selecionado cães
 
-		if(codigoMunicipio==null)
+		if(codigoMunicipio==null){
 			codigoMunicipio = 3106200l; //padrão municipio BH
+			if(lat==null)
+				lat = -43.944540;
+			if(lng==null)
+				lng = -19.922681;
+		}
+		else{
+			MunicipioModel municipio = MunicipioModel.findById(codigoMunicipio);
+			if(municipio!=null){
+				if(lat==null && municipio.lng!=null){
+					if(municipio.lat.split("\\.")[0]!=null)
+					lat = Double.parseDouble(GeoUtils.juntaNumeros(municipio.lng));
+				}
+				if(lng==null && municipio.lat!=null){
+					lng = Double.parseDouble(GeoUtils.juntaNumeros(municipio.lat));
+				}
+				if(lat==null && municipio.lng==null)
+					lng = -19.922681;
+				if(lng==null && municipio.lat==null)
+					lat = -43.944540;
+			}
+
+		}
 
 		if(ordem==null)
 			ordem = true; // ordem padrão crescente

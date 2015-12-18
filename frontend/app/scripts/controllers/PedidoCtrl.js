@@ -16,6 +16,11 @@ angular.module('frontendApp')
 
     $scope.files = [];
 
+    $scope.raio = 100;
+
+    $scope.tipoAnimal = "CAES";
+
+
     if(SessaoArmazenacao.getPedidos())
       $scope.sessaoPedido = SessaoArmazenacao.getPedidos();
 
@@ -44,7 +49,7 @@ angular.module('frontendApp')
 
 
     $scope.listarPedidos = function () {
-      PedidoService.listar({lat : null,lng: null,tipoAnimal: $scope.tipoAnimal,raio: $scope.raio,ordem: true,pagina : 1},function (data) {
+      PedidoService.listar({lat : null,codigoMunicipio : $scope.cidade,lng: null,tipoAnimal: $scope.tipoAnimal,raio: $scope.raio,ordem: true,pagina : 1},function (data) {
         if (data.status == 'e') {
           Mensagem.exibir(data.message, 'error')
         } else {
@@ -351,7 +356,24 @@ angular.module('frontendApp')
       });
     };
 
+
+    function getLocation(latlng){
+
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({'latLng': latlng}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {
+            var loc = getCountry(results);
+            console.log(loc);
+          }
+        }
+      });
+
+    }
+
+
     function init(){
+      getLocation();
       $scope.listarPedidos();
     }
 
