@@ -1,15 +1,14 @@
 package utils;
 
-import java.util.List;
-
-import org.apache.commons.lang.NullArgumentException;
-import org.apache.commons.lang.StringUtils;
-
 import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
+import org.apache.commons.lang.NullArgumentException;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.List;
 
 /**
  * 
@@ -20,7 +19,27 @@ import com.vividsolutions.jts.io.WKTReader;
  *
  */
 public class GeoUtils {
-	
+
+	public static String converteKmRaio(String raio){
+
+		Integer raioInt = Integer.parseInt(raio);
+
+
+		String resulta;
+		if(raioInt == 100)
+			return resulta =  "1.00000";
+
+		if(raioInt >= 1 && raioInt <= 9){
+			resulta = "0.0" + raioInt +"000";
+		}
+		else{
+			resulta = "0."+ raioInt  +"000";
+		}
+		return  resulta;
+
+
+
+	}
 	/**
 	 * 
 	 */

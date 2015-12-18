@@ -9,9 +9,11 @@
     <file url="file://$PROJECT_DIR$/app/scripts/directive/AlertService.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/directive/UploadFactory.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/service/PedidoService.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/service/SessaoNavegacao.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/service/UsuarioService.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/utils/ArrayUtils.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/utils/DateFormatUtil.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/utils/StringUtils.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/creative.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/grayscale.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/main.css" charset="UTF-8" />

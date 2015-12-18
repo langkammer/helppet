@@ -1,5 +1,6 @@
 package models.helppet;
 
+import play.db.jpa.Blob;
 import play.db.jpa.GenericModel;
 
 import javax.persistence.*;
@@ -19,12 +20,9 @@ public class FotosModel extends GenericModel implements Cloneable{
     @Column(columnDefinition = "serial")
     public Long id;
 
-    @Column(name = "NOME_FOTO")
-    public String nomefoto;
-
-    @Column(name = "FILE_PATH")
-    public String filePath;
+    @Column(name = "CAPA")
+    public Boolean capa;
 
     @Column(name = "FILE")
-    public Boolean capa;
+    public Blob file;
 }

@@ -10,19 +10,94 @@
 angular.module('frontendApp')
   .controller('PedidoCtrl', function ($scope,$location,PedidoService,Mensagem,Upload,SessaoArmazenacao) {
 
+
       console.log("main");
     $scope.markers = [];
 
+    $scope.files = [];
+
+    if(SessaoArmazenacao.getPedidos())
+      $scope.sessaoPedido = SessaoArmazenacao.getPedidos();
+
     if(SessaoArmazenacao.getSessao())
       $scope.$parent.usuario  = SessaoArmazenacao.getSessao();
+
+    //$scope.addFoto = function(e){
+    //  console.log("SS");
+    //};
+
+    $scope.array = function (num) {
+
+      var array = [];
+      if(num > 1){
+        for(var i = 0; i <= num; i ++)
+          array.push(i)
+      }
+      else{
+          array.push(0)
+      }
+
+      return array;
+    };
+
+
+
+
+    $scope.listarPedidos = function () {
+      PedidoService.listar({lat : null,lng: null,tipoAnimal: $scope.tipoAnimal,raio: $scope.raio,ordem: true,pagina : 1},function (data) {
+        if (data.status == 'e') {
+          Mensagem.exibir(data.message, 'error')
+        } else {
+          $scope.listaPedidos = [];
+          if(data.data)
+            $scope.listaPedidos = JSON.parse(data.data);
+        }
+      });
+
+    };
 
 
     //if(SessaoArmazenacao.getSessao()){
     //  $location.path('/#');
     //}
 
+    $scope.addFile =function(){
+      if($scope.file!=null){
 
-    $scope.raio = 25;
+
+      if($scope.file.name.split(".")[1].toUpperCase() == 'JPG' || $scope.file.name.split(".")[1].toUpperCase() == 'JPEG'  || $scope.file.name.split(".")[1].toUpperCase() == 'PNG'  || $scope.file.name.split(".")[1].toUpperCase() == 'BMP' )
+      {
+        if($scope.file){
+          if($scope.files.length <= 5){
+            if(!_.findWhere($scope.files, {name : $scope.file.name}) )
+              $scope.files.push($scope.file);
+          }
+          else{
+            Mensagem.exibir("Limite de fotos excedeu");
+          }
+
+        }
+      }
+      else{
+        Mensagem.exibir("Extenção não permetida",'error');
+      }
+
+    }
+    };
+
+    $scope.removeFile = function(item){
+
+      if($scope.files)
+        $scope.files = _.without($scope.files, item);
+
+    };
+
+    $scope.definirPadrao = function (file) {
+
+        $scope.padrao = file.name;
+
+    };
+
     console.log($scope.anexo);
     $scope.altura =  $(window).height()  + 'px';
     $scope.center = {};
@@ -85,7 +160,10 @@ angular.module('frontendApp')
         if (data.status == 'e') {
           Mensagem.exibir(data.message, 'error')
         } else {
+          if(SessaoArmazenacao.getPedidos())
+            SessaoArmazenacao.limparPedidos();
           Mensagem.exibir(data.message,"success");
+          SessaoArmazenacao.setPedidos(JSON.parse(data.data));
           $location.path("/upload-pedido");
         }
       });
@@ -101,6 +179,68 @@ angular.module('frontendApp')
         //});
 
 
+    };
+    $scope.finalizarPedido = function(e){
+      if($scope.files.length>5){
+        Mensagem.exibir("Impossivel Publicar Fotos supera o limite de 5 fotos");
+        return;
+      }
+      if($scope.files.length<1){
+        Mensagem.exibir("Impossivel Publicar sem Nenhuma foto");
+        return;
+      }
+
+      if($scope.files.length <= 5){
+        if(!$scope.padrao)
+          $scope.padrao = $scope.files[0].name;
+        //for(var i = 0; i <= $scope.files.length; i ++){
+          Upload.upload({
+            url: 'service/pedido/adicionarFoto',
+            method: 'POST',
+            data : {idPedido : SessaoArmazenacao.getPedidos().id, padrao : $scope.padrao},
+            file:  $scope.files,
+            fileFormDataName: "file"
+          })
+            .success(function(data){
+
+              if (data.status == 'e') {
+                Mensagem.exibir(data.message, 'error');
+              }
+              else {
+
+                if(SessaoArmazenacao.getPedidos())
+                  SessaoArmazenacao.limparPedidos();
+                Mensagem.exibir(data.message,"success");
+                $location.path("/pedido");
+
+
+              }
+
+
+            })
+            .error(function(data){
+              Mensagem.exibir("ERRO " + data.message,'error');
+
+            });
+        //}
+
+
+
+          //PedidoService.salvarFoto({},function (data) {
+          //  if (data.status == 'e') {
+          //    Mensagem.exibir(data.message, 'error')
+          //  } else {
+          //    if(SessaoArmazenacao.getPedidos())
+          //      SessaoArmazenacao.limparPedidos();
+          //    Mensagem.exibir(data.message,"success");
+          //    SessaoArmazenacao.setPedidos(data.data);
+          //    $location.path("/upload-pedido");
+          //  }
+          //});
+
+
+
+      }
     };
     //$scope.map = {
     //  defaults: {
@@ -210,5 +350,11 @@ angular.module('frontendApp')
         }
       });
     };
+
+    function init(){
+      $scope.listarPedidos();
+    }
+
+    init();
 
   });

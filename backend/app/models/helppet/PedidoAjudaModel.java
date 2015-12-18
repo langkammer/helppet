@@ -10,12 +10,19 @@ import models.CoordenadaGps;
 import models.base.MunicipioModel;
 import models.portalseg.UsuarioModel;
 import org.hibernate.annotations.Type;
+import play.db.jpa.Blob;
 import play.db.jpa.GenericModel;
 import play.db.jpa.JPA;
+import play.libs.MimeTypes;
+import utils.GeoUtils;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +39,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 //	0.00001 = 1  METROS
 //	0.00010 = 10 METROS
 //	0.00100 = 100 METROS
+//	0.14000
 //	0.01000 = 1000 METROS
 //	0.10000 = 10000 METROS
 //	1.00000 = 100000 METROS
@@ -96,15 +104,19 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 		return JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 	}
 
-	public static List<PedidoAjudaModel> filtrarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem){
+	public static List<PedidoAjudaModel> filtrarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem, Long pagina){
 
 		if(lat==null)
 			lat = -43.944540;
 		if(lng==null)
 			lng = -19.922681;
 
-		if(raio==null)
-			raio = "0.10000"; // padrao caso o raio não venha será de 100 km
+		if(raio.isEmpty() || Integer.parseInt(raio) == 0){
+			raio = "1.00000"; // padrao caso o raio não venha será de 100 km
+		}
+		else{
+			raio = GeoUtils.converteKmRaio(raio);
+		}
 
 		if(tipoAnimal==null)
 			tipoAnimal = TipoAnimal.CAES; // por padrão é sempre selecionado cães
@@ -168,4 +180,48 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 //
 //
 //	}
+
+
+	public String salvarFoto(List<File> file, Long idPedido,String padrao) throws FileNotFoundException {
+
+		PedidoAjudaModel pedido = PedidoAjudaModel.findById(idPedido);
+
+		FotosModel foto;
+
+		List<FotosModel> listaFoto = new ArrayList<FotosModel>();
+		for(File fileFoto : file){
+			foto = new FotosModel();
+			Blob blobImage = new Blob();
+			blobImage.set(new FileInputStream(fileFoto), MimeTypes.getContentType(fileFoto.getName()));
+			foto.file = blobImage;
+			if(fileFoto.getName().equals(padrao)){
+				foto.capa = true;
+			}
+			else{
+				foto.capa = false;
+			}
+
+			listaFoto.add(foto);
+		}
+
+		pedido.fotos = null;
+
+		pedido.fotos = listaFoto;
+
+		pedido.save();
+
+		return "ok";
+
+	}
+
+	public File getFoto(Long idPedido, Integer numFoto){
+
+		PedidoAjudaModel pedido = PedidoAjudaModel.findById(idPedido);
+
+		if(numFoto==null)
+			numFoto = 0;
+		return pedido.fotos.get(numFoto).file.getFile();
+
+
+	}
 }

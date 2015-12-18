@@ -16,27 +16,32 @@
 
     return {
 
-    salvarPedido: function (data, successCallback, errorCallback) {
+      salvarPedido: function (data, successCallback, errorCallback) {
 
-        request.postFormEncoded('pedido/cadastrarPedido', data, successCallback, errorCallback);
+          request.postFormEncoded('pedido/cadastrarPedido', data, successCallback, errorCallback);
 
-      },
+        },
 
       buscarGps: function (data, successCallback, errorCallback) {
 
         request.postFormEncoded('pedido/buscarPedidoPorGps', data, successCallback, errorCallback);
 
       },
-      listar: function (successCallback, errorCallback) {
+      listar: function (data,successCallback, errorCallback) {
 
-        request.get('pedido/listarPedidos', successCallback, errorCallback);
+        request.postFormEncoded('pedido/filtrarPedidos',data, successCallback, errorCallback);
 
       },
       listarCidades: function (uf,successCallback, errorCallback) {
 
         request.get('generico/'+uf+'/listaCidades', successCallback, errorCallback);
 
-      }
+      },
+      salvarFoto: function (data, successCallback, errorCallback) {
+
+        request.postFormEncoded('pedido/adicionarFoto', data, successCallback, errorCallback);
+
+      },
 
     };//fim return
 

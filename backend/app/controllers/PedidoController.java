@@ -56,7 +56,7 @@ public class PedidoController extends ControllerUtil {
 
             if(pedido == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"pedido"));
-            renderJSONGEOSucesso(pedido.salvarPedido(lat,lng), "Pedido Salvo com Sucesso!",0, "geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
+            renderJSONGEOSucesso(pedido.salvarPedido(lat,lng), "Pedido Salvo com Sucesso!",0, "id", "geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
 
         }
         catch (Exception e){
@@ -66,17 +66,17 @@ public class PedidoController extends ControllerUtil {
 
     }
 
-    public static void listarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem){
+    public static void listarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem,Long pagina){
 
         try{
 
-            List<PedidoAjudaModel> listaPedido = new PedidoAjudaModel().filtrarPedidos(lat,lng,tipoAnimal,raio,codigoMunicipio,ordem);
+            List<PedidoAjudaModel> listaPedido = new PedidoAjudaModel().filtrarPedidos(lat,lng,tipoAnimal,raio,codigoMunicipio,ordem,pagina);
 
             if(listaPedido==null || listaPedido.size() < 1)
                 renderJSONSucesso("Consulta Vazia!");
 
             if(listaPedido!=null)
-                renderJSONGEOSucesso(listaPedido, "Consulta Correta!",listaPedido.size(), "geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
+                renderJSONGEOSucesso(listaPedido, "Consulta Correta!",listaPedido.size(), "id","geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
         }
         catch (Exception e){
             renderJSONError(MessageUtil.ERRO_PADRAO);
@@ -85,5 +85,53 @@ public class PedidoController extends ControllerUtil {
 
     }
 
+    public static void salvarFoto(List<File> file, Long idPedido, String padrao){
 
+        try{
+
+            if(idPedido == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"idPedido"));
+
+            renderJSONSucesso(new PedidoAjudaModel().salvarFoto(file,idPedido,padrao), "Foto Adicionada com Sucesso" ,0);
+
+
+        }
+        catch (Exception e){
+
+            renderJSONError("ERRO AO ADICIONAR FOTO");
+        }
+
+    }
+
+    public static void getFoto(Long idPedido, Integer numFoto){
+
+        try{
+            if(idPedido == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"idPedido"));
+
+            File file = new PedidoAjudaModel().getFoto(idPedido, numFoto);
+
+            if(file!=null)
+                renderBinary(new PedidoAjudaModel().getFoto(idPedido,numFoto));
+
+        }
+        catch (Exception e){
+            renderJSONError("ERRO AO LOCALIZAR FOTO");
+        }
+
+    }
+
+    public static void getPedido(Long idPedido){
+
+        try{
+            if(idPedido == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"idPedido"));
+            renderJSONGEOSucesso(PedidoAjudaModel.findById(idPedido), "Consulta Correta!",0, "id","geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
+
+
+        }
+        catch (Exception e){
+            renderJSONError("ERRO AO LOCALIZAR FOTO");
+        }
+    }
 }
