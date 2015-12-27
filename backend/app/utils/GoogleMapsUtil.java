@@ -107,7 +107,9 @@ public class GoogleMapsUtil {
 
 
 			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
-					.setAddress(cidade.nome).setLanguage("br")
+					.setAddress(cidade.nome)
+					.setRegion(cidade.uf)
+					.setLanguage("br")
 					.getGeocoderRequest();
 
 			GeocodeResponse geocoderResponse;
@@ -121,14 +123,14 @@ public class GoogleMapsUtil {
 				for (GeocoderAddressComponent addressComponent : geoResponse
 						.getAddressComponents()) {
 
-					if (addressComponent.getTypes().toString().equals("[administrative_area_level_1, political]")) {
+					if (geoResponse.getGeometry()!=null) {
 
 
 						// CIDADE
 						if(addressComponent.getShortName().equals(cidade.uf)){
 							System.out.println(cidade.nome);
 							cidade.lat = geoResponse.getGeometry().getLocation().getLat().toString();
-							cidade.lat = geoResponse.getGeometry().getLocation().getLng().toString();
+							cidade.lng = geoResponse.getGeometry().getLocation().getLng().toString();
 
 							return cidade.save();
 						}

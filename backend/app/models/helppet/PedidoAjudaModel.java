@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "pedido_ajuda")
-public class PedidoAjudaModel extends GenericModel implements Cloneable{
+public class PedidoAjudaModel extends GenericModel{
 
 //
 //	EXEMPLO DE BUFFER
@@ -109,17 +109,17 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 
 
 		if(raio.isEmpty() || Integer.parseInt(raio) == 0){
-			raio = "1.00000"; // padrao caso o raio não venha será de 100 km
+			raio = "1.00000"; // padrao caso o raio nï¿½o venha serï¿½ de 100 km
 		}
 		else{
 			raio = GeoUtils.converteKmRaio(raio);
 		}
 
 		if(tipoAnimal==null)
-			tipoAnimal = TipoAnimal.CAES; // por padrão é sempre selecionado cães
+			tipoAnimal = TipoAnimal.CAES; // por padrï¿½o ï¿½ sempre selecionado cï¿½es
 
 		if(codigoMunicipio==null){
-			codigoMunicipio = 3106200l; //padrão municipio BH
+			codigoMunicipio = 3106200l; //padrï¿½o municipio BH
 			if(lat==null)
 				lat = -43.944540;
 			if(lng==null)
@@ -129,11 +129,10 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 			MunicipioModel municipio = MunicipioModel.findById(codigoMunicipio);
 			if(municipio!=null){
 				if(lat==null && municipio.lng!=null){
-					if(municipio.lat.split("\\.")[0]!=null)
-					lat = Double.parseDouble(GeoUtils.juntaNumeros(municipio.lng));
+					lat = Double.parseDouble(municipio.lng);
 				}
 				if(lng==null && municipio.lat!=null){
-					lng = Double.parseDouble(GeoUtils.juntaNumeros(municipio.lat));
+					lng = Double.parseDouble(municipio.lat);
 				}
 				if(lat==null && municipio.lng==null)
 					lng = -19.922681;
@@ -144,7 +143,7 @@ public class PedidoAjudaModel extends GenericModel implements Cloneable{
 		}
 
 		if(ordem==null)
-			ordem = true; // ordem padrão crescente
+			ordem = true; // ordem padrï¿½o crescente
 
 		if(ordem == true) {
 			String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lat + "," + lng + "), 4326), " + raio + "))" +

@@ -8,7 +8,7 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('PedidoCtrl', function ($scope,$location,PedidoService,Mensagem,Upload,SessaoArmazenacao) {
+  .controller('PedidoCtrl', function ($scope,$location,PedidoService,Mensagem,Upload,SessaoArmazenacao,leafletData) {
 
 
       console.log("main");
@@ -19,6 +19,8 @@ angular.module('frontendApp')
     $scope.raio = 100;
 
     $scope.tipoAnimal = "CAES";
+
+    $scope.tipEndereco = "MAPA";
 
 
     if(SessaoArmazenacao.getPedidos())
@@ -158,20 +160,29 @@ angular.module('frontendApp')
     };
     $scope.salvarPedido = function(e){
     //Do what you need to do
-      var objetoMontado = montaObjeto();
+      if($scope.coordenada.lat==null || $scope.coordenada.lng == null){
+        Mensagem.exibir("Por Favor Selecione um Lugar no mapa ou digite o endereço", "error");
+        return;
+      }
+      else{
+        var objetoMontado = montaObjeto();
 
 
-      PedidoService.salvarPedido({pedido : objetoMontado, lat : objetoMontado.geo.lat, lng: objetoMontado.geo.lng},function (data) {
-        if (data.status == 'e') {
-          Mensagem.exibir(data.message, 'error')
-        } else {
-          if(SessaoArmazenacao.getPedidos())
-            SessaoArmazenacao.limparPedidos();
-          Mensagem.exibir(data.message,"success");
-          SessaoArmazenacao.setPedidos(JSON.parse(data.data));
-          $location.path("/upload-pedido");
-        }
-      });
+        PedidoService.salvarPedido({pedido : objetoMontado, lat : objetoMontado.geo.lat, lng: objetoMontado.geo.lng},function (data) {
+          if (data.status == 'e') {
+            Mensagem.exibir(data.message, 'error')
+          } else {
+            if(SessaoArmazenacao.getPedidos())
+              SessaoArmazenacao.limparPedidos();
+            Mensagem.exibir(data.message,"success");
+            SessaoArmazenacao.setPedidos(JSON.parse(data.data));
+            $location.path("/upload-pedido");
+          }
+        });
+      }
+
+
+
 
 
         //PedidoService.salvarPedido({pedido : objetoMontado},function (data) {
@@ -256,9 +267,7 @@ angular.module('frontendApp')
     //};
     angular.extend($scope, {
       center: {
-        lat: -19.922681,
-        lng: -43.944540,
-        zoom: 4
+        autoDiscover: true
       },
       layers: {
         baselayers: {
@@ -338,6 +347,17 @@ angular.module('frontendApp')
 
     },5);
 
+    $scope.selecionaCidadeMapa = function(){
+      if($scope.pedido.municipio.lat){
+        $scope.center = {
+          lat: $scope.pedido.municipio.lat,
+          lng: $scope.pedido.municipio.lng,
+          zoom: 15
+        };
+        $scope.$apply();
+      }
+    };
+
     $scope.listaCidades = function (uf) {
       PedidoService.listarCidades(uf,function (data) {
         if (data.status == 'e') {
@@ -352,28 +372,26 @@ angular.module('frontendApp')
 
 
 
+
         }
       });
     };
 
-
-    function getLocation(latlng){
-
-      var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({'latLng': latlng}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[0]) {
-            var loc = getCountry(results);
-            console.log(loc);
-          }
-        }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(successFunction, function () {
+        console.log("erro");
       });
-
+    } else {
+      Mensagem.exibir('Permita o envio de  sua Localizacao no seu navegador para o melhor uso do sistema','warning');
     }
 
+    function successFunction(position) {
+      $scope.lat =  position.coords.latitude;
+      $scope.lng = position.coords.longitude;
+      //console.log('Your latitude is :'+lat+' and longitude is '+long);
+    }
 
     function init(){
-      getLocation();
       $scope.listarPedidos();
     }
 

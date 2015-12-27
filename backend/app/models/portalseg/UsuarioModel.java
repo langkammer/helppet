@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "USUARIO")
-public class UsuarioModel extends GenericModel implements Cloneable{
+public class UsuarioModel extends GenericModel {
 
 
 	@Id

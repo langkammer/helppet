@@ -140,7 +140,7 @@
             </div>
             <div class="nav navbar-nav" id="barraPerfil" >
               <img ng-if="usuario.idSocial" ng-src="https://graph.facebook.com/{{usuario.idSocial}}/picture?type=large" height="50px" width="50px" class="img-circle">
-              <img ng-if="usuario.perfilFoto" src="images/{{usuario.perfilFoto}}" height="50px" width="50px" class="img-circle">
+              <img ng-if="!usuario.idSocial" src="images/{{usuario.perfilFoto}}" height="50px" width="50px" class="img-circle">
               {{usuario.nome}}
             </div>
             <ul class="nav navbar-nav" ng-show="usuario">
