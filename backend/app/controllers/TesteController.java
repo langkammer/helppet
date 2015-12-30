@@ -27,7 +27,7 @@ public class TesteController extends ControllerUtil {
 			List<MunicipioModel> listaMunicipios = MunicipioModel.find("lat = null And lng = null").fetch();
 			for(MunicipioModel municipio : listaMunicipios) {
 
-				if (contador <= 2000){
+				if (contador <= 1850){
 					if(municipio.lat == null && municipio.lng == null){
 						GoogleMapsUtil.consultaCidade(municipio);
 						contador++;

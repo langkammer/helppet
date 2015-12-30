@@ -21,7 +21,45 @@ angular.module('frontendApp')
     $scope.tipoAnimal = "CAES";
 
     $scope.tipEndereco = "MAPA";
+    $scope.center = {};
 
+    //$scope.center = {
+    //  lat : -14.77488250651626,
+    //  lng : -54.7998046875,
+    //  zoom : 4
+    //};
+    //
+
+    $scope.center.autoDiscover = true;
+
+
+
+    $scope.$on("leafletDirectiveMap.click", function(event, args) {
+
+      $scope.coordenada = {
+        lat : args.leafletEvent.latlng.lat,
+        lng : args.leafletEvent.latlng.lng
+      }
+        ,
+
+        //  markers:[
+        //  {
+        //    id: 1,
+        //    endereco: 'Rua José Luiz de Deus 42',
+        //    lat: -19.810282,
+        //    lng: -43.965337,
+        //    icon: {
+        //      iconUrl: 'img/ponto_marca.png',
+        //      iconRetinaUrl: 'img/ponto_marca.png',
+        //      iconSize: [32, 32],
+        //      iconAnchor: [12.5, 41]
+        //    },
+        //    message: "Animal Aqui <div>  <img src='images/cao-vira-lata.jpg' height='100%' width='100%'></div>",
+        //  }
+        //]
+        $scope.markers = [];
+      $scope.markers.push($scope.coordenada);
+    });
 
     if(SessaoArmazenacao.getPedidos())
       $scope.sessaoPedido = SessaoArmazenacao.getPedidos();
@@ -107,34 +145,7 @@ angular.module('frontendApp')
 
     console.log($scope.anexo);
     $scope.altura =  $(window).height()  + 'px';
-    $scope.center = {};
 
-    $scope.$on("leafletDirectiveMap.click", function(event, args) {
-
-      $scope.coordenada = {
-        lat : args.leafletEvent.latlng.lat,
-        lng : args.leafletEvent.latlng.lng
-      }
-        ,
-
-      //  markers:[
-      //  {
-      //    id: 1,
-      //    endereco: 'Rua José Luiz de Deus 42',
-      //    lat: -19.810282,
-      //    lng: -43.965337,
-      //    icon: {
-      //      iconUrl: 'img/ponto_marca.png',
-      //      iconRetinaUrl: 'img/ponto_marca.png',
-      //      iconSize: [32, 32],
-      //      iconAnchor: [12.5, 41]
-      //    },
-      //    message: "Animal Aqui <div>  <img src='images/cao-vira-lata.jpg' height='100%' width='100%'></div>",
-      //  }
-      //]
-      $scope.markers = [];
-      $scope.markers.push($scope.coordenada);
-    });
 
     function montaObjeto(){
       var objetoDevolvido = {};
@@ -266,21 +277,8 @@ angular.module('frontendApp')
     //  }
     //};
     angular.extend($scope, {
-      center: {
-        autoDiscover: true
-      },
       layers: {
         baselayers: {
-          osm: {
-            name: 'Open Street Map',
-            type: 'xyz',
-            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            layerOptions: {
-              subdomains: ['a', 'b', 'c'],
-              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-              continuousWorld: true
-            }
-          },
           Google: {
             name: 'Google Mapas',
             type: 'xyz',
@@ -289,6 +287,16 @@ angular.module('frontendApp')
               maxZoom: 20,
               subdomains: ['mt0','mt1','mt2','mt3'],
               attribution: '&copy; <a href="http://www.google.com/copyright">Google</a> contributors',
+              continuousWorld: true
+            }
+          },
+          osm: {
+            name: 'Open Street Map',
+            type: 'xyz',
+            url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            layerOptions: {
+              subdomains: ['a', 'b', 'c'],
+              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
               continuousWorld: true
             }
           },
@@ -321,6 +329,8 @@ angular.module('frontendApp')
 
       }
     });
+
+
     $scope.salvarFotos= function(e){
       if(e.files.length>5){
         Mensagem.exibir("Impossivel Publicar Fotos supera o limite de 5 fotos");
@@ -348,14 +358,24 @@ angular.module('frontendApp')
     },5);
 
     $scope.selecionaCidadeMapa = function(){
-      if($scope.pedido.municipio.lat){
+      if($scope.municipio.lat && $scope.municipio.lng){
+        //atualizando coordenadas
         $scope.center = {
-          lat: $scope.pedido.municipio.lat,
-          lng: $scope.pedido.municipio.lng,
-          zoom: 15
+          lat: parseFloat($scope.municipio.lat),
+          lng: parseFloat($scope.municipio.lng),
+          zoom: parseInt(15)
         };
-        $scope.$apply();
       }
+      if($scope.municipio){
+        if(!$scope.pedido)
+          $scope.pedido = {};
+        if(!$scope.pedido.municipio)
+          $scope.pedido.municipio = {};
+        $scope.pedido.municipio = $scope.municipio;
+
+      }
+
+
     };
 
     $scope.listaCidades = function (uf) {
@@ -377,19 +397,6 @@ angular.module('frontendApp')
       });
     };
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successFunction, function () {
-        console.log("erro");
-      });
-    } else {
-      Mensagem.exibir('Permita o envio de  sua Localizacao no seu navegador para o melhor uso do sistema','warning');
-    }
-
-    function successFunction(position) {
-      $scope.lat =  position.coords.latitude;
-      $scope.lng = position.coords.longitude;
-      //console.log('Your latitude is :'+lat+' and longitude is '+long);
-    }
 
     function init(){
       $scope.listarPedidos();

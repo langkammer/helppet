@@ -4,12 +4,7 @@
     <div class="row">
       <div class="col-md-6">
         <div data-tap-disabled="true">
-          <input type="text" ng-model="center.zoom">
           <leaflet lf-center="center" markers="markers" layers="layers" height="400px" width="100%"></leaflet>
-
-          <!--<leaflet lf-center="posicao" markers="markers" layers="layers" height="{{altura}}" ></leaflet>-->
-          <div ng-show="coordenada"> Lat : {{coordenada.lat}} Lng : {{coordenada.lng}} </div>
-          {{center}}
         </div>
       </div>
       <div class="col-md-6">
@@ -38,7 +33,7 @@
             <option></option>
           </select>
           <label for="cidades">Cidade</label>
-          <select name="cidades" id="cidades" class="form-control" ng-model="pedido.municipio"
+          <select name="cidades" id="cidades" class="form-control" ng-model="municipio"
                 ng-options="c as c.nome for c in cidades" style="width: 100%;"
                 data-placeholder="Selecione a Cidade" ng-change="selecionaCidadeMapa()">
             <option></option>
@@ -51,6 +46,7 @@
 
           <label for="endereco">Endereco</label>
           <input id="endereco" class="form-control" ng-model="pedido.endereco" ng-disabled="tipEndereco=='MAPA'">
+          <div ng-show="coordenada.lat">Lat : {{coordenada.lat}} Lng : {{coordenada.lng}}</div>
           </div>
           <div class="form-group">
             <label for="freq">Quantas Vezes você ja viu esse animal</label>
@@ -59,6 +55,7 @@
 
               </uib-rating> <b  ng-show="pedido.frequencia">({{pedido.frequencia}} <i ng-show="pedido.frequencia > 2">Vez ou mais</i> <i ng-show="pedido.frequencia <= 2">Vez </i>)</b></div>
           </div>
+
         </form>
       </div>
     </div>

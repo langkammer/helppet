@@ -7,9 +7,11 @@ import com.google.code.geocoder.model.GeocoderAddressComponent;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import models.base.MunicipioModel;
+import models.bean.PontoBean;
 import play.Logger;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GoogleMapsUtil {
 	
@@ -146,50 +148,63 @@ public class GoogleMapsUtil {
 			return null;
 		} catch (IOException e) {
 
-			Logger.error(e, "[UrbGTException] >>> HASH: " + e.hashCode());
+			Logger.error(e, "[HELP-PET] >>> HASH: " + e.hashCode());
 
 			return null;
 		}
 
 	}
-//
-//	public static List<Geometry> consultarGeolocalizacao(String endereco) {
-//
-//		List<Geometry> pontos = new ArrayList<Geometry>();
-//
-//		try {
-//			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
-//					.setAddress(endereco)
-//					.setLanguage("br")
-//					.getGeocoderRequest();
-//
-//			GeocodeResponse geocoderResponse;
-//
-//			geocoderResponse = new Geocoder().geocode(geocoderRequest);
-//
-//			for (GeocoderResult geoResult : geocoderResponse.getResults()) {
-//
-//				LatLng latLng = geoResult.getGeometry().getLocation();
-//
-//				Double lat = latLng.getLat().doubleValue();
-//				Double lng = latLng.getLng().doubleValue();
-//
-//				Geometry point = new GeometryFactory().createPoint(new Coordinate(lng, lat));
-//
-//				point.setSRID(4326);
-//
-//				pontos.add(point);
-//
-//			}
-//
-//		} catch (IOException e) {
-//
-//			Logger.error(e, "[UrbGTException] >>> HASH: " + e.hashCode());
-//
-//		}
-//
-//		return pontos;
-//	}
+
+	public static List<PontoBean> consultarGeolocalizacao(String endereco,String uf) {
+
+		try {
+			GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
+					.setAddress(endereco)
+					.setRegion(uf)
+					.setLanguage("br")
+					.getGeocoderRequest();
+
+			GeocodeResponse geocoderResponse;
+
+			geocoderResponse = new Geocoder().geocode(geocoderRequest);
+
+			List<PontoBean> listaPontos = null;
+			PontoBean pontoBean;
+
+
+			for (GeocoderResult geoResult : geocoderResponse.getResults()) {
+
+				pontoBean = new PontoBean();
+
+				for (GeocoderAddressComponent addressComponent : geoResult.getAddressComponents()) {
+
+					if (geoResult.getGeometry() != null) {
+						if (addressComponent.getShortName().equals(uf)) {
+							if (addressComponent.getTypes().toString().equals("[route]")) {
+								pontoBean.endereco = addressComponent.getLongName();
+								pontoBean.lat = geoResult.getGeometry().getLocation().getLat().toString();
+								pontoBean.lng = geoResult.getGeometry().getLocation().getLng().toString();
+							}
+
+
+						}
+
+					}
+
+					listaPontos.add(pontoBean);
+
+				}
+
+			}
+
+			return listaPontos;
+		}
+		catch(Exception e){
+			Logger.error(e, "[HELP-PET] >>> HASH: " + e.hashCode());
+			return  null;
+
+		}
+	}
 //
 //	public static List<BairroColetaModel> consultarPonto(String latitude,
 //			String longitude) {

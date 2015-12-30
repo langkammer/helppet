@@ -69,9 +69,6 @@
     <script src="bower_components/leaflet-plugins/layer/tile/Google.js"></script>
     <script src="bower_components/leaflet-plugins/layer/tile/Yandex.js"></script>
     <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
-    <script src="bower_components/br-validations/releases/br-validations.js"></script>
-    <script src="bower_components/string-mask/src/string-mask.js"></script>
-    <script src="bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
@@ -111,6 +108,7 @@
         <script src="scripts/utils/ArrayUtils.js"></script>
         <script src="scripts/directive/UploadFactory.js"></script>
         <script src="scripts/utils/StringUtils.js"></script>
+        <script src="scripts/externo/angular-leaflet-directive_dev_mapped.js"></script>
 
 
 
@@ -138,9 +136,9 @@
               <button class="mdl-button mdl-js-button mdl-button--accent" ng-click="cadastrar()">Junte se a nós</button>
               <button class="mdl-button mdl-js-button mdl-button--primary" ng-click="login()">Login</button>
             </div>
-            <div class="nav navbar-nav" id="barraPerfil" >
-              <img ng-if="usuario.idSocial" ng-src="https://graph.facebook.com/{{usuario.idSocial}}/picture?type=large" height="50px" width="50px" class="img-circle">
-              <img ng-if="!usuario.idSocial" src="images/{{usuario.perfilFoto}}" height="50px" width="50px" class="img-circle">
+            <div class="nav navbar-nav" id="barraPerfil" ng-show="usuario">
+              <img ng-show="usuario.idSocial" ng-src="https://graph.facebook.com/{{usuario.idSocial}}/picture?type=large" height="50px" width="50px" class="img-circle">
+              <img ng-show="!usuario.idSocial" src="images/{{usuario.perfilFoto}}" height="50px" width="50px" class="img-circle">
               {{usuario.nome}}
             </div>
             <ul class="nav navbar-nav" ng-show="usuario">
