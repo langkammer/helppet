@@ -12,11 +12,11 @@ import java.util.List;
 public class MapaController  extends ControllerUtil {
 
 
-	public static void listarPontos(Double lat, Double lng,String raio){
+	public static void listarPontos(Double lat, Double lng,Integer raio){
 
 		try{
 
-			List<PedidoAjudaModel> listaPedido = new PedidoAjudaModel().listarPedidosMapa(lat,lng,raio);
+			List<PedidoAjudaModel> listaPedido = new PedidoAjudaModel().listarPedidosMapa(lat, lng, raio);
 
 			if(listaPedido==null || listaPedido.size() < 1)
 				renderJSONSucesso("Consulta Vazia!");

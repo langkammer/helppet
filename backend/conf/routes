@@ -37,4 +37,7 @@ GET		/service/pedido/{idPedido}/getPedido					PedidoController.getPedido
 GET			/service/generico/{uf}/listaCidades					GenericosController.listarCidadesByUf
 POST		/service/generico/consultaEndereco					GenericosController.enderecoPonto
 
-GET		/service/pedido/gerarDados								PedidoController.gerarDadosCidades
+GET			/service/pedido/gerarDados							PedidoController.gerarDadosCidades
+
+# MAPA
+POST 		/service/mapa/filtrarPedidosMapa					MapaController.listarPontos
