@@ -104,6 +104,25 @@ public class PedidoAjudaModel extends GenericModel{
 		return JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 	}
 
+	public static List<PedidoAjudaModel> listarPedidosMapa(Double lat, Double lng, String raio){
+
+
+
+		if(raio.isEmpty() || Integer.parseInt(raio) == 0){
+			raio = "1.00000"; // padrao caso o raio n�o venha ser� de 100 km
+		}
+		else{
+			raio = GeoUtils.converteKmRaio(raio);
+		}
+
+		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lat + "," + lng + "), 4326), " + raio + "))";
+
+		List<PedidoAjudaModel> listaPedidos = JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
+
+		return listaPedidos;
+
+	}
+
 	public static List<PedidoAjudaModel> filtrarPedidos(Double lat, Double lng, TipoAnimal tipoAnimal, String raio, Long codigoMunicipio, Boolean ordem, Long pagina){
 
 

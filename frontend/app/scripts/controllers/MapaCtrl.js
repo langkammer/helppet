@@ -10,7 +10,14 @@
 angular.module('frontendApp')
   .controller('MapaCtrl', function ($scope,$location,SessaoArmazenacao) {
 
-      console.log("mapa");
+
+    $scope.$on("leafletDirectiveMap.moveend", function(event, args) {
+
+      console.log("zoom",$scope.center);
+
+    });
+
+    console.log("mapa");
 
     if(SessaoArmazenacao.getSessao())
       $scope.$parent.usuario  = SessaoArmazenacao.getSessao();

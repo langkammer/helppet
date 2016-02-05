@@ -40,6 +40,69 @@ public class GeoUtils {
 
 
 	}
+
+	public static String zomToRaio(Integer zom){
+		switch (zom) {
+			case 1:
+				return "50.00000";
+				break;
+			case 2:
+				return "30.00000";
+				break;
+			case 3:
+				return "20.00000";
+				break;
+			case 4:
+				return "15.00000";
+				break;
+			case 5:
+				return "10.00000";
+				break;
+			case 6:
+				return "9.00000";
+				break;
+			case 7:
+				return "8.00000";
+				break;
+			case 8:
+				return "7.00000";
+				break;
+			case 9:
+				return "6.00000";
+				break;
+			case 10:
+				return "5.00000";
+				break;
+			case 11:
+				return "4.00000";
+				break;
+			case 12:
+				return "3.00000";
+				break;
+			case 13:
+				return "0.50000";
+				break;
+			case 14:
+				return "0.40000";
+				break;
+			case 15:
+				return "0.09000";
+				break;
+			case 16:
+				return "0.06000";
+				break;
+			case 17:
+				return "0.03000";
+				break;
+			case 18:
+				return "0.01000";
+				break;
+			default:
+				return "0.01000";
+		}
+
+	}
+
 	public static String juntaNumeros(String num){
 		String resultado = null;
 
