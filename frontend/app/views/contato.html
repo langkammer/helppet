@@ -10,27 +10,27 @@
             <div class="col-md-6">
               <!-- Accent-colored raised button with ripple -->
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="nome">
+                <input class="mdl-textfield__input" type="text" id="nome" ng-model="nome">
                 <label class="mdl-textfield__label" for="nome">Seu Nome</label>
               </div>
               <p></p>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="email">
+                <input class="mdl-textfield__input" type="text" id="email" ng-model="email">
                 <label class="mdl-textfield__label" for="email">Seu Email</label>
               </div>
               <p></p>
               <div>
                 <h5>
                 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="diversos">
-                  <input type="radio" id="diversos" class="mdl-radio__button" name="options" value="1" checked>
+                  <input type="radio" id="diversos" class="mdl-radio__button" name="options" ng-model="tipo" value="DIVERSOS" checked>
                   <span class="mdl-radio__label">Diversos</span>
                 </label>
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                    <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="1">
+                    <input type="radio" id="option-2" class="mdl-radio__button" name="options" ng-model="tipo" value="BUGS">
                     <span class="mdl-radio__label">Bugs</span>
                   </label>
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3">
-                    <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="1">
+                    <input type="radio" id="option-3" class="mdl-radio__button" name="options" ng-model="tipo" value="AJUDA">
                     <span class="mdl-radio__label">Ajuda</span>
                   </label>
                 </h5>
@@ -38,19 +38,19 @@
               <p></p>
               <div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <textarea class="mdl-textfield__input" rows="5" id="comment"></textarea>
+                  <textarea class="mdl-textfield__input" rows="5" id="comment"  ng-model="msg"></textarea>
                   <label class="mdl-textfield__label" for="comment">Mensagem</label>
                 </div>
               </div>
               <p></p>
-              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                Button
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click="contatoSend()">
+                Enviar Contato
               </button>
             </div>
             <div class="col-md-6">
-              <div class="col-lg-3"><h1><a href="#"><i class="fa fa-facebook-official"></i></a></h1></div>
-              <div class="col-lg-3"><h1><a href="#"><i class="fa fa-twitter"></i></a></h1></div>
-              <div class="col-lg-3"><h1><a href="#"><i class="fa fa-google-plus"></i></a></h1></div>
+              <div class="col-lg-3"><h1><a href="https://www.facebook.com/robson.emiliolangkammer"><i class="fa fa-facebook-official"></i></a></h1></div>
+              <div class="col-lg-3"><h1><a href="http://twitter.com/robsonlangk"><i class="fa fa-twitter"></i></a></h1></div>
+              <div class="col-lg-3"><h1><a href="https://br.linkedin.com/in/robson-emilio-langkammer-5827b14b"><i class="fa fa-google-plus"></i></a></h1></div>
 
             </div>
           </div>

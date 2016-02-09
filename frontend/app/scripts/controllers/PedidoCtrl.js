@@ -12,6 +12,13 @@ angular.module('frontendApp')
 
 
       console.log("main");
+
+    $scope.abrirPedido = function (p) {
+      SessaoArmazenacao.setPedidos(p);
+      $location.path("/detalhes-pedido");
+    };
+
+
     $scope.markers = [];
 
     $scope.files = [];

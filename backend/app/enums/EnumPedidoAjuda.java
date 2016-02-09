@@ -6,8 +6,10 @@ package enums;
 public enum EnumPedidoAjuda {
 
 	AGUARDANDO(0, "Aguardando Aprovação"),
-	EM_ABERTO(1, "Em Aberto"),
-	RESGATADO(2, "Resgatado");
+	APROVADO(1, "Em Aberto"),
+	RESGATADO(2, "Resgatado"),
+	REPROVADO(3, "Pedido Reprovado");
+
 
 	private Integer id;
 	private String name;

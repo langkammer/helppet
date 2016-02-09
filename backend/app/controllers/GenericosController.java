@@ -5,6 +5,7 @@ import models.CoordenadaGps;
 import models.base.MunicipioModel;
 import models.bean.PontoBean;
 import models.helppet.PedidoAjudaModel;
+import models.portalseg.FormularioContatoModel;
 import utils.ControllerUtil;
 import utils.GoogleMapsUtil;
 import utils.messages.MessageUtil;
@@ -43,7 +44,7 @@ public class GenericosController extends ControllerUtil {
             if(nome == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"nome"));
 
-            List<PontoBean> listPontos = GoogleMapsUtil.consultarGeolocalizacao(nome,uf);
+            List<PontoBean> listPontos = GoogleMapsUtil.consultarGeolocalizacao(nome, uf);
 
             renderJSONSucesso(listPontos, "Consulta Correta!", listPontos.size());
 
@@ -54,5 +55,34 @@ public class GenericosController extends ControllerUtil {
         }
     }
 
+    public static void sendContato(FormularioContatoModel formContato){
+        try{
+
+            if(formContato == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"formContato"));
+            formContato.enviarContato();
+            renderJSONSucesso("Formulario de Contato Enviado com Sucesso!");
+
+        }
+        catch (Exception e){
+            renderJSONError(MessageUtil.ERRO_PADRAO);
+
+        }
+    }
+
+    public static void listarMensagens(Integer pagina){
+        try{
+
+            if(pagina == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"pagina"));
+
+            renderJSONSucesso(FormularioContatoModel.listarMsgPaginado(pagina), "Consulta Realizada Com Sucesso!", (int) FormularioContatoModel.count());
+
+        }
+        catch (Exception e){
+            renderJSONError(MessageUtil.ERRO_PADRAO);
+
+        }
+    }
 
 }

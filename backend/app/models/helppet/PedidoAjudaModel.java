@@ -5,11 +5,15 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import enums.EnumFrequencia;
 import enums.EnumPedidoAjuda;
+import enums.EnumPublicacao;
 import enums.TipoAnimal;
 import models.CoordenadaGps;
 import models.base.MunicipioModel;
+import models.bean.PedidoPonto;
 import models.portalseg.UsuarioModel;
+import notifiers.Mails;
 import org.hibernate.annotations.Type;
+import play.Play;
 import play.db.jpa.Blob;
 import play.db.jpa.GenericModel;
 import play.db.jpa.JPA;
@@ -22,6 +26,8 @@ import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,15 +110,28 @@ public class PedidoAjudaModel extends GenericModel{
 		return JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 	}
 
-	public static List<PedidoAjudaModel> listarPedidosMapa(Double lat, Double lng, Integer raioInt){
+	public static List<PedidoPonto> listarPedidosMapa(Double lat, Double lng, Integer raioInt){
 
 		String raio = GeoUtils.zomToRaio(raioInt);
 
-		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lat + "," + lng + "), 4326), " + raio + "))";
+		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lng + "," +lat  + "), 4326), " + raio + "))";
 
 		List<PedidoAjudaModel> listaPedidos = JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 
-		return listaPedidos;
+		PedidoPonto pedidoBean;
+
+		List<PedidoPonto> listaBeanPedidos = new ArrayList<PedidoPonto>();
+
+		for(PedidoAjudaModel pedido : listaPedidos){
+
+			pedidoBean = new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
+										 pedido.observacao,pedido.status,pedido.tipoAnimal,pedido.usuario.id,pedido.municipio,pedido.fotos.size());
+
+
+			listaBeanPedidos.add(pedidoBean);
+		}
+
+		return listaBeanPedidos;
 
 	}
 
@@ -212,7 +231,7 @@ public class PedidoAjudaModel extends GenericModel{
 //	}
 
 
-	public String salvarFoto(List<File> file, Long idPedido,String padrao) throws FileNotFoundException {
+	public String salvarFoto(List<File> file, Long idPedido,String padrao) throws FileNotFoundException, UnsupportedEncodingException {
 
 		PedidoAjudaModel pedido = PedidoAjudaModel.findById(idPedido);
 
@@ -240,6 +259,8 @@ public class PedidoAjudaModel extends GenericModel{
 
 		pedido.save();
 
+		Mails.notificaPublicacaoPendente(EnumPublicacao.PENDENTE,pedido.usuario);
+
 		return "ok";
 
 	}
@@ -250,8 +271,153 @@ public class PedidoAjudaModel extends GenericModel{
 
 		if(numFoto==null)
 			numFoto = 0;
-		return pedido.fotos.get(numFoto).file.getFile();
+		File file;
+		if(pedido.fotos.size() <= 0){
 
+			file = new java.io.File("public/images/logo.png");
+		}
+		else{
+			file = pedido.fotos.get(numFoto).file.getFile();
+
+		}
+
+		return file;
+
+
+	}
+
+	public static String getPedidoFotoFalseTrue(Long idPedido){
+
+
+		PedidoAjudaModel pedidoAjuda = PedidoAjudaModel.findById(idPedido);
+
+		if(pedidoAjuda!=null){
+			if(pedidoAjuda.fotos.size()>0){
+				return "service/pedido/"+pedidoAjuda.id+"/getFoto/0";
+			}
+			else{
+				return "images/ponto_marca.png";
+			}
+		}
+		else{
+			return "images/ponto_marca.png";
+		}
+
+
+
+	}
+
+
+	public static String[] getFotosArray(Long idPedido){
+
+
+		PedidoAjudaModel pedidoAjuda = PedidoAjudaModel.findById(idPedido);
+
+		String[] pathFotos = new String[pedidoAjuda.fotos.size()];
+		int i = 0;
+		if(pedidoAjuda!=null){
+			for(FotosModel fotos : pedidoAjuda.fotos){
+				pathFotos[i] = "service/pedido/"+pedidoAjuda.id+"/getFoto/"+i;
+				i++;
+			}
+			return pathFotos;
+		}
+		else{
+			pathFotos[0] = "images/ponto_marca.png";
+			return pathFotos;
+		}
+
+
+
+	}
+	public static PedidoPonto getPedido(Long idPedido){
+
+		PedidoAjudaModel pedido = PedidoAjudaModel.findById(idPedido);
+
+		 return new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
+				pedido.observacao,pedido.status,pedido.tipoAnimal,pedido.usuario.id,pedido.municipio,pedido.fotos.size());
+
+	}
+
+	public static List<PedidoPonto> listarPedidoByUser(String idUsuario){
+
+		List<PedidoAjudaModel> listaPedidos = PedidoAjudaModel.find("usuario.id = :idUsuario")
+															  .setParameter("idUsuario",Long.parseLong(idUsuario))
+															  .fetch();
+
+		List<PedidoPonto> listaPedido = new ArrayList<PedidoPonto>();
+
+		PedidoPonto pedido;
+
+		SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		for(PedidoAjudaModel p : listaPedidos){
+
+			pedido = new PedidoPonto();
+
+			pedido.frequencia = p.frequencia;
+
+			pedido.observacao = p.observacao;
+
+			pedido.condicoes = p.condicoes;
+
+			pedido.data = dt.format(p.data);
+
+			pedido.id = p.id;
+
+			listaPedido.add(pedido);
+
+		}
+		return listaPedido;
+
+	}
+
+	public static List<PedidoPonto> listarPedidosPaginado(Integer pagina){
+		if( pagina == null || pagina<1)
+		{
+			pagina = 1;
+		}
+
+		List<PedidoPonto> listaPedidosBean = new ArrayList<PedidoPonto>();
+
+		List<PedidoAjudaModel> listaPedidos = PedidoAjudaModel.find("")
+				.fetch(pagina, Integer.parseInt(Play.configuration.getProperty("configuration.pagination.size")));
+
+		PedidoPonto pedidoBean;
+		SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
+		for(PedidoAjudaModel p : listaPedidos){
+
+		pedidoBean = new PedidoPonto();
+			pedidoBean.id = p.id;
+			pedidoBean.condicoes = p.condicoes;
+			pedidoBean.observacao = p.observacao;
+			pedidoBean.frequencia = p.frequencia;
+			pedidoBean.municipio = p.municipio;
+			pedidoBean.idUsuario = p.usuario.id;
+			pedidoBean.status = p.status;
+			pedidoBean.data = dt.format(p.data);
+
+			listaPedidosBean.add(pedidoBean);
+		}
+
+		return listaPedidosBean;
+	}
+
+	public void aprovarPedido() throws UnsupportedEncodingException {
+
+		if(this.status != EnumPedidoAjuda.APROVADO){
+			this.status = EnumPedidoAjuda.APROVADO;
+			this.save();
+			Mails.notificaPublicacaoAprovada(EnumPublicacao.PUBLICADO, this.usuario);
+		}
+
+	}
+	public void reprovarPedido() throws UnsupportedEncodingException {
+
+			this.status = EnumPedidoAjuda.REPROVADO;
+			this.save();
+		Mails.notificaPublicacaoReprovada(EnumPublicacao.REPROVADO, this.usuario);
 
 	}
 }

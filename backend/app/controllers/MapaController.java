@@ -1,5 +1,6 @@
 package controllers;
 
+import models.bean.PedidoPonto;
 import models.helppet.PedidoAjudaModel;
 import utils.ControllerUtil;
 import utils.messages.MessageUtil;
@@ -16,13 +17,13 @@ public class MapaController  extends ControllerUtil {
 
 		try{
 
-			List<PedidoAjudaModel> listaPedido = new PedidoAjudaModel().listarPedidosMapa(lat, lng, raio);
+			List<PedidoPonto> listaPedido = new PedidoAjudaModel().listarPedidosMapa(lat, lng, raio);
 
 			if(listaPedido==null || listaPedido.size() < 1)
 				renderJSONSucesso("Consulta Vazia!");
 
 			if(listaPedido!=null)
-				renderJSONGEOSucesso(listaPedido, "Consulta Correta!",listaPedido.size(), "id","geo", "usuario","fotos","tipoAnimal","observacao", "observacao", "condicoes", "frequencia","status");
+				renderJSONSucesso(listaPedido, "Consulta Correta!",listaPedido.size());
 		}
 		catch (Exception e){
 			renderJSONError(MessageUtil.ERRO_PADRAO);

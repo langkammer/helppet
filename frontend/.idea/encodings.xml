@@ -2,6 +2,8 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/scripts/app.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/controllers/AdministracaoCtrl.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/scripts/controllers/DetalhesPedidoCtrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/MainCtrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/MapaCtrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/scripts/controllers/PedidoCtrl.js" charset="UTF-8" />
@@ -18,7 +20,9 @@
     <file url="file://$PROJECT_DIR$/app/styles/grayscale.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/styles/main.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/about.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/administracao.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/contato.html" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/views/detalhes-pedido.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/layout/footer.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/layout/head.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/views/layout/menu.html" charset="UTF-8" />

@@ -44,13 +44,13 @@ public class GeoUtils {
 	public static String zomToRaio(Integer zom){
 		switch (zom) {
 			case 1:
-				return "50.00000";
+				return "14.00000";
 			case 2:
-				return "30.00000";
+				return "14.00000";
 			case 3:
-				return "20.00000";
+				return "14.00000";
 			case 4:
-				return "15.00000";
+				return "14.00000";
 			case 5:
 				return "10.00000";
 			case 6:

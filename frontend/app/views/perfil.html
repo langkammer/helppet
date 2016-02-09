@@ -25,7 +25,7 @@
   </div>
   <div class="espacamento3">
   <div class="row espacamento2">
-  <div class="col-md-3">
+  <div class="col-md-2">
     <div class="panel panel-info">
       <div class="panel-heading">Notificações</div>
       <div class="panel-body">
@@ -33,23 +33,69 @@
       </div>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-5">
     <div class="panel panel-info">
       <div class="panel-heading">Publicações</div>
       <div class="panel-body">
-        Panel content
+        <table width="100%" class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+          <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Observações</th>
+            <th>Data</th>
+            <!--<th></th>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="p in pedidosUsuario" ng-click="abrePedido(p)">
+            <td ><img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="50px" width="50px"></td>
+            <td><div ng-show="p.observacao.lenght > 10">...</div>{{p.observacao}}</td>
+            <td>{{p.data}}</td>
+            <!--<td>-->
+              <!--<button ng-click="abreNotificacao(p)" class="mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-js-ripple-effect mdl-button&#45;&#45;colored">-->
+                <!--<i class="material-icons" >remove</i>-->
+              <!--</button>-->
+            <!--</td>-->
+          </tr>
+          </tbody>
+        </table>
+
       </div>
     </div>
   </div>
-  <div class="col-md-3 ">
+  <div class="col-md-5 ">
       <div class="panel panel-info">
         <div class="panel-heading">Animais Perto de Min</div>
         <div class="panel-body">
-          Panel content
+          <leaflet markers="mapsPontos" lf-center="center" height="400px" layers="layers" width="100%"></leaflet>
         </div>
       </div>
   </div>
 
   </div>
 </div>
+  <!-- Modal Exluir Pedido -->
+  <!--<div class="modal fade" id="ModalRemoverPublicação" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+    <!--<div class="modal-dialog" role="document">-->
+      <!--<div class="modal-content">-->
+        <!--<div class="modal-header">-->
+          <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+          <!--<h4 class="modal-title" id="myModalLabel">Aviso!</h4>-->
+        <!--</div>-->
+        <!--<div class="modal-body">-->
+          <!--<img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="200px" width="200px">-->
+          <!--Condições :-->
+          <!--{{p.condicoes}}-->
+          <!--<p></p>-->
+          <!--Observação:-->
+          <!--{{p.observacao}}-->
+          <!--Você tem certeza que deseja remover essa Publicação?-->
+        <!--</div>-->
+        <!--<div class="modal-footer">-->
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>-->
+          <!--<button type="button" class="btn btn-danger" ng-click="remover(p)">Confirmar</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 </div>

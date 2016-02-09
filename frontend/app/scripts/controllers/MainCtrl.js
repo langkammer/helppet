@@ -42,7 +42,7 @@ angular.module('frontendApp')
           } else {
 
             SessaoArmazenacao.setSessao(data.data);
-            $('#LoginModal').modal('hide');                // initializes and invokes show immediately as
+            $('#CadastrarUsuario').modal('hide');                // initializes and invokes show immediately as
             $location.path("/perfil");
 
 
@@ -112,7 +112,17 @@ angular.module('frontendApp')
     $rootScope.reenviarSenha = function () {
 
       if($scope.login.user){
-        Mensagem.exibir("Senha Reenviada Com sucesso no seu email","success");
+
+        UsuarioService.recuperar({email :$scope.login.user},function (data) {
+          if (data.status == 'e') {
+            Mensagem.exibir(data.message, 'error');
+          } else {
+            Mensagem.exibir(data.message, 'success');
+            $scope.login.user = '';
+            $('#LoginModal').modal('hide');                // initializes and invokes show immediately as
+
+          }
+        });
       }
       else{
         Mensagem.exibir("Usuario deve ser preenchido","error");
@@ -186,5 +196,27 @@ angular.module('frontendApp')
 
 
     };
+
+    $rootScope.contatoSend = function(){
+
+      UsuarioService.enviarMsg({formContato : {nome : $scope.nome , email : $scope.email , tipoContato : $scope.tipo,msg : $scope.msg }},function (data) {
+        if (data.status == 'e') {
+          Mensagem.exibir(data.message, 'error');
+        } else {
+          Mensagem.exibir(data.message, 'success');
+          resetFormContato();
+
+        }
+      });
+
+
+
+    };
+    function resetFormContato(){
+      $scope.nome = '';
+      $scope.email = '';
+      $scope.tipo = '';
+      $scope.msg = '';
+    }
 
   });

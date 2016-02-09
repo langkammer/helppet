@@ -69,7 +69,6 @@ module.exports = function(config) {
       'bower_components/crypto-js/index.js',
       'bower_components/angular-facebook/lib/angular-facebook.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/html5shiv/dist/html5shiv.js',
       // endbower
       "app/scripts/**/*.js",
       "test/mock/**/*.js",

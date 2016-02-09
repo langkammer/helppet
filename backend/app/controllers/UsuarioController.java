@@ -1,9 +1,15 @@
 package controllers;
 
+import models.bean.PedidoPonto;
+import models.helppet.PedidoAjudaModel;
 import models.portalseg.UsuarioModel;
+import notifiers.Mails;
 import utils.ControllerUtil;
+import utils.SenhaGenerate;
 import utils.messages.MessageUtil;
-import play.libs.Crypto;
+
+import java.util.List;
+
 
 /**
  * Created by Robson on 20/10/2015.
@@ -17,8 +23,19 @@ public class UsuarioController extends ControllerUtil {
 
             if(usuario == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"usuario"));
+
+            UsuarioModel verificaUserCadastrado = UsuarioModel.find("email = :email")
+                                                              .setParameter("email",usuario.email)
+                                                              .first();
+            if(verificaUserCadastrado!=null)
+                renderJSONError("Email Já Cadastrado");
+
+            UsuarioModel user = usuario.salvarUsuario();
+
+            session.put("usuario",user.id);
+
             if(usuario != null)
-                renderJSONSucesso(usuario.salvarUsuario(),String.format(MessageUtil.CADASTRO_REALIZADO_SUCESSO_P,"Usuario"),0 );
+                renderJSONSucesso(user, String.format(MessageUtil.CADASTRO_REALIZADO_SUCESSO_P, "Usuario"), 0);
         }
         catch (Exception e){
             renderJSONError(MessageUtil.ERRO_PADRAO);
@@ -67,13 +84,46 @@ public class UsuarioController extends ControllerUtil {
         }
     }
 
-    public static void listarUsuarios(){
+    public static void listarUsuarios(Integer pagina){
+        try{
 
+            List<UsuarioModel> usuarios = new UsuarioModel().listarUsuariosPaginado(pagina);
+
+            renderJSONSucesso(usuarios, String.format(MessageUtil.MSG_GENERICA_CADASTRO, "Pedido"), (int) UsuarioModel.count(""));
+        }
+        catch (Exception e){
+            renderJSONError("Erro ao Buscar Pedidos");
+        }
     }
-
     public static void esqueceuSenha(String email){
 
+        try{
+
+            if(email==null)
+                renderJSONError("Email em Branco");
+
+
+            UsuarioModel usuario = UsuarioModel.find("email = :email")
+                    .setParameter("email", email)
+                    .first();
+
+            String novaSenha = SenhaGenerate.gerarSenha();
+
+            usuario.senha = SenhaGenerate.sha1(novaSenha);
+            if(usuario!=null){
+                session.put("usuario",usuario.id);
+                Mails.reenviaSenha(usuario,novaSenha);
+                renderJSONSucesso(usuario.save(), "Senha Reenviada com Sucesso!",0);
+            }
+
+            if(usuario==null)
+                renderJSONError("Usuario não existe");
+        }
+        catch (Exception e){
+
+        }
     }
+
     public static void deletarUsuario(Long idUsuario){
 
     }
@@ -86,10 +136,14 @@ public class UsuarioController extends ControllerUtil {
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"idRedeSocial"));
             if(idRedeSocial != null) {
                 UsuarioModel user = UsuarioModel.find("idSocial = :idSocial").setParameter("idSocial", idRedeSocial).first();
-                if(user!=null)
-                    renderJSONSucesso(user,String.format(MessageUtil.CONSULTA_REALIZADA_SUCESSO,"Usuario"),0 );
-                else
+                if(user!=null) {
+                    session.put("usuario",user.id);
+                    renderJSONSucesso(user, String.format(MessageUtil.CONSULTA_REALIZADA_SUCESSO, "Usuario"), 0);
+                }
+                else{
                     renderJSONSucesso("Nenhum Usuario Cadastrado");
+
+                }
             }
 
         }
@@ -100,5 +154,7 @@ public class UsuarioController extends ControllerUtil {
         }
 
     }
+
+
 
 }

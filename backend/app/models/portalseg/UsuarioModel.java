@@ -7,10 +7,18 @@ package models.portalseg;
 import enums.EnumUsuario;
 import enums.EnumVinculado;
 import enums.TipoUsuario;
+import models.bean.PedidoPonto;
+import notifiers.Mails;
+import play.Play;
 import play.db.jpa.GenericModel;
+import play.libs.Mail;
 
 import javax.persistence.*;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "USUARIO")
@@ -67,7 +75,30 @@ public class UsuarioModel extends GenericModel {
 		this.data = new Date();
 		this.perfilFoto = "padraofoto.jpeg";
 		this.status = EnumUsuario.ATIVO;
+		Mails.bemVindo(this);
+
 		return this.save();
 	}
+
+	public String getFoto(Long idUsuario){
+
+		UsuarioModel usuario = UsuarioModel.findById(idUsuario);
+
+		return perfilFoto;
+
+
+	}
+
+
+	public static List<UsuarioModel> listarUsuariosPaginado(Integer pagina){
+		if( pagina == null || pagina<1)
+		{
+			pagina = 1;
+		}
+
+		return UsuarioModel.find("")
+				.fetch(pagina, Integer.parseInt(Play.configuration.getProperty("configuration.pagination.size")));
+	}
+
 
 }

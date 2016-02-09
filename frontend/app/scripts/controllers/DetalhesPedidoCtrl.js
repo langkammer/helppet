@@ -8,68 +8,15 @@
  * Controller of the frontendApp
  */
 angular.module('frontendApp')
-  .controller('MapaCtrl', function ($scope,$location,SessaoArmazenacao,PedidoService,Mensagem) {
-
-    $scope.abrirPedido = function (p) {
-      SessaoArmazenacao.setPedidos(p);
-      $location.path("/detalhes-pedido");
-    };
-
-    //$scope.mapsPontos = [
-    //  {
-    //    lat : -19.918565630724597,
-    //    lng : -44.07744884490967
-    //  },
-    //  {
-    //    lat : -19.912755404317988,
-    //    lng : -44.075303077697754
-    //  },
-    //  {
-    //    lat : -19.916669260850536,
-    //    lng : -44.093263149261475
-    //  }
-    //];
-    $scope.$on("leafletDirectiveMap.moveend", function(event, args) {
-	  //
-      ////console.log("zoom",$scope.center);
-      PedidoService.filtrarMapa({lat : $scope.center.lat,lng: $scope.center.lng,raio :$scope.center.zoom},function (data) {
-        if (data.status == 'e') {
-          Mensagem.exibir(data.message, 'error')
-        } else {
-          $scope.mapsPontos = [];
-          if(data.data)
-            $scope.mapsPontos = data.data;
-        }
-      });
-
-    });
-
-    console.log("mapa");
-
-    if(SessaoArmazenacao.getSessao())
-      $scope.$parent.usuario  = SessaoArmazenacao.getSessao();
-
-    $scope.$parent.menu = $location.path();
-
-    $scope.menu = true;
-
-    $scope.altura =  parseInt(parseInt($(window).height()))  + 'px';
-
+  .controller('DetalhesPedidoCtrl', function ($scope,$location,PedidoService,Mensagem,SessaoArmazenacao) {
     $scope.center = {};
-    //$scope.map = {
-    //  defaults: {
-    //    tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-    //    maxZoom: 18,
-    //    zoomControlPosition: 'bottomleft'
-    //  }
-    //};
+
+    $scope.usuario = SessaoArmazenacao.getSessao();
+
+    $scope.markers = [];
+
+
     angular.extend($scope, {
-      center: {
-        lat: -19.922681,
-        lng: -43.944540,
-        zoom: 16,
-        autoDiscover: true
-      },
       layers: {
         baselayers: {
           Google: {
@@ -118,7 +65,54 @@ angular.module('frontendApp')
 
         }
 
-      }
 
+
+      }
     });
+    function init(){
+      if($location.search().id)
+        SessaoArmazenacao.setPedidos({id :$location.search().id});
+
+      PedidoService.getPedido(SessaoArmazenacao.getPedidos().id,function (data) {
+        if (data.status == 'e') {
+          Mensagem.exibir(data.message, 'error');
+        } else {
+          if(data.data){
+            $scope.p = data.data;
+            $scope.center = {lat : data.data.lat, lng : data.data.lng, zoom : 16};
+            if(data.data.lat){
+              $scope.marker = [{lat : data.data.lat, lng : data.data.lng}];
+
+            }
+          }
+        }
+      });
+    };
+
+    $scope.comentar = function () {
+      PedidoService.commentar({comentario : $scope.comentario,idPedido : SessaoArmazenacao.getPedidos().id},function (data) {
+        if (data.status == 'e') {
+          Mensagem.exibir(data.message, 'error');
+        } else {
+          Mensagem.exibir(data.message, 'success');
+          $scope.comentario = '';
+          $scope.listarComentario();
+        }
+      });
+    };
+
+    $scope.listarComentario = function(){
+      PedidoService.listarComentario(SessaoArmazenacao.getPedidos().id,function (data) {
+        if (data.status == 'e') {
+          Mensagem.exibir(data.message, 'error');
+        } else {
+          if(data.data){
+            $scope.comentarios = data.data;
+          }
+        }
+      });
+    };
+
+    init();
+
   });

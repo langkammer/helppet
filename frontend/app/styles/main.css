@@ -98,8 +98,17 @@
   /*margin-left: 25px;*/
   /*border-color: #250404;*/
 /*}*/
+.center{
+  text-align: center;
+}
+.alinhamento-texto-esquerda{
+  text-align: left;
+}
+.espacamento_div {
 
+  margin-top: 10px;
 
+}
 .espacamento {
 
   margin-top: 52px;

@@ -87,6 +87,8 @@
         <script src="scripts/controllers/PedidoCtrl.js"></script>
         <script src="scripts/controllers/MainCtrl.js"></script>
         <script src="scripts/controllers/PerfilCtrl.js"></script>
+        <script src="scripts/controllers/DetalhesPedidoCtrl.js"></script>
+        <script src="scripts/controllers/AdministracaoCtrl.js"></script>
         <script src="scripts/directive/MdlConfig.js"></script>
         <script src="scripts/externo/cbpAnimatedHeader.js"></script>
         <script src="scripts/externo/wow.min.js"></script>
@@ -130,6 +132,7 @@
             <li ng-class="{'active': menu == '/mapa'}"><a href="#/mapa">Mapa</a></li>
             <li ng-class="{'active': menu == '/about'}"><a href="#/about">Sobre Nós</a></li>
             <li ng-class="{'active': menu == '/contato'}"><a href="#/contato">Contato</a></li>
+            <li ng-show="usuario.tipo === 'ADMINISTRACAO'"ng-class="{'active': menu == '/administracao'}"><a href="#/administracao">Administração</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <div class="nav navbar-nav" id="barraLogin" ng-hide="usuario">

@@ -24,7 +24,7 @@
 
       recuperar: function (data, successCallback, errorCallback) {
 
-        request.get('usuario/recuperar', data, successCallback, errorCallback);
+        request.postFormEncoded('usuario/recuperar', data, successCallback, errorCallback);
 
       },
       verificarRedeSocial: function (idRedeSocial, successCallback, errorCallback) {
@@ -41,6 +41,22 @@
       deslogar: function (successCallback, errorCallback) {
 
         request.get('usuario/deslogar', successCallback, errorCallback);
+
+      }
+      ,
+      enviarMsg: function (data,successCallback, errorCallback) {
+
+        request.postFormEncoded('generico/enviaContatoMail',data, successCallback, errorCallback);
+
+      },
+      listarUsuariosPaginado: function (pagina, successCallback, errorCallback) {
+
+        request.get('usuario/'+pagina+'/listar ',  successCallback, errorCallback);
+
+      },
+      listarMensagens: function (pagina, successCallback, errorCallback) {
+
+        request.get('generico/'+pagina+'/listarMensagens ',  successCallback, errorCallback);
 
       }
     };//fim return

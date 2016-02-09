@@ -16,7 +16,7 @@ GET     /public/                                staticDir:public
 # USUARIO
 POST    /service/usuario/cadastro              					 UsuarioController.cadastrarUsuario
 POST    /service/usuario/recuperar              				 UsuarioController.esqueceuSenha
-GET     /service/usuario/listar                 				 UsuarioController.listarUsuarios
+GET     /service/usuario/{pagina}/listar                 		 UsuarioController.listarUsuarios
 POST    /service/usuario/deletar                				 UsuarioController.deletarUsuario
 POST    /service/usuario/logar	                				 UsuarioController.logar
 GET     /service/usuario/{idRedeSocial}/verificar          		 UsuarioController.verificarRedeSocial
@@ -32,10 +32,20 @@ POST 	/service/pedido/filtrarPedidos							PedidoController.listarPedidos
 POST 	/service/pedido/adicionarFoto							PedidoController.salvarFoto
 GET 	/service/pedido/{idPedido}/getFoto/{numFoto}			PedidoController.getFoto
 GET		/service/pedido/{idPedido}/getPedido					PedidoController.getPedido
+POST	/service/pedido/commentar								PedidoController.comentar
+GET		/service/pedido/{idPedido}/listarComentario				PedidoController.listarComentario
+GET 	/service/pedido/listarPedidosByUser						PedidoController.listarPedidosByUsuario
+GET 	/service/pedido/{pagina}/listarPedidosPagina			PedidoController.listarPedidosPaginado
+POST 	/service/pedido/aprovarPedido							PedidoController.aprovarPedido
+POST 	/service/pedido/reprovarPedido							PedidoController.reprovarPedido
+
 
 # GENERICO
 GET			/service/generico/{uf}/listaCidades					GenericosController.listarCidadesByUf
 POST		/service/generico/consultaEndereco					GenericosController.enderecoPonto
+POST		/service/generico/enviaContatoMail					GenericosController.sendContato
+GET			/service/generico/{pagina}/listarMensagens			GenericosController.listarMensagens
+
 
 GET			/service/pedido/gerarDados							PedidoController.gerarDadosCidades
 

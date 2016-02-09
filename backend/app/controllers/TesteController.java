@@ -1,9 +1,10 @@
 package controllers;
 
 
-import models.base.MunicipioModel;
+import enums.EnumPublicacao;
+import models.portalseg.UsuarioModel;
+import notifiers.Mails;
 import utils.ControllerUtil;
-import utils.GoogleMapsUtil;
 
 import java.util.List;
 
@@ -21,21 +22,21 @@ public class TesteController extends ControllerUtil {
 //		WHERE codigo_municipio > 0;
 
 		try{
-
-			int contador = 0;
-
-			List<MunicipioModel> listaMunicipios = MunicipioModel.find("lat = null And lng = null").fetch();
-			for(MunicipioModel municipio : listaMunicipios) {
-
-				if (contador <= 1850){
-					if(municipio.lat == null && municipio.lng == null){
-						GoogleMapsUtil.consultaCidade(municipio);
-						contador++;
-						System.out.println("CONTADOR " + contador);
-					}
-				}
-
-			}
+//
+//			int contador = 0;
+//
+//			List<MunicipioModel> listaMunicipios = MunicipioModel.find("lat = null And lng = null").fetch();
+//			for(MunicipioModel municipio : listaMunicipios) {
+//
+//				if (contador <= 1850){
+//					if(municipio.lat == null && municipio.lng == null){
+//						GoogleMapsUtil.consultaCidade(municipio);
+//						contador++;
+//						System.out.println("CONTADOR " + contador);
+//					}
+//				}
+//
+//			}
 
 		}
 		catch (Exception e){

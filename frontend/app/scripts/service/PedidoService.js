@@ -37,13 +37,49 @@
         request.get('generico/'+uf+'/listaCidades', successCallback, errorCallback);
 
       },
+      getPedido: function (idPedido,successCallback, errorCallback) {
+        request.get('pedido/'+idPedido+'/getPedido', successCallback, errorCallback);
+
+      },
       salvarFoto: function (data, successCallback, errorCallback) {
 
         request.postFormEncoded('pedido/adicionarFoto', data, successCallback, errorCallback);
 
       },
+      filtrarMapa: function (data, successCallback, errorCallback) {
 
-    };//fim return
+        request.postFormEncoded('mapa/filtrarPedidosMapa', data, successCallback, errorCallback);
+
+      },
+      commentar: function (data, successCallback, errorCallback) {
+
+        request.postFormEncoded('pedido/commentar', data, successCallback, errorCallback);
+
+      },
+      listarComentario : function (idPedido,successCallback, errorCallback) {
+
+        request.get('pedido/'+idPedido+'/listarComentario', successCallback, errorCallback);
+
+      },
+      listarPedidosUsuario : function (successCallback, errorCallback) {
+
+        request.get('pedido/listarPedidosByUser', successCallback, errorCallback);
+
+      },
+      listarPedidosPaginada : function (pagina,successCallback, errorCallback) {
+
+        request.get('pedido/'+pagina+'/listarPedidosPagina', successCallback, errorCallback);
+      },
+      aprovarPedido : function (data,successCallback, errorCallback) {
+
+        request.postFormEncoded('pedido/aprovarPedido',data, successCallback, errorCallback);
+      },
+      reprovarPedido : function (data,successCallback, errorCallback) {
+
+        request.postFormEncoded('pedido/reprovarPedido', data,successCallback, errorCallback);
+      }
+
+  };//fim return
 
   });//fim service
 

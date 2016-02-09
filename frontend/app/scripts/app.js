@@ -58,6 +58,14 @@ var app = angular.module('frontendApp',
         templateUrl: 'views/upload-foto-pedido.html',
         controller: 'PedidoCtrl'
       })
+      .when('/detalhes-pedido', {
+        templateUrl: 'views/detalhes-pedido.html',
+        controller: 'DetalhesPedidoCtrl'
+      })
+      .when('/administracao', {
+        templateUrl: 'views/administracao.html',
+        controller: 'AdministracaoCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

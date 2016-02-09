@@ -6,7 +6,8 @@ package enums;
 public enum TipoUsuario {
 
 	COMUN(0, "Comun"),
-	GRUPO_APAIO(1, "Grupo de Apoio");
+	GRUPO_APAIO(1, "Grupo de Apoio"),
+	ADMINISTRACAO(2,"Administração do Portal");
 
 	private Integer id;
 	private String name;
