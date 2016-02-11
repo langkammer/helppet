@@ -75,8 +75,8 @@ public class UsuarioModel extends GenericModel {
 		this.data = new Date();
 		this.perfilFoto = "padraofoto.jpeg";
 		this.status = EnumUsuario.ATIVO;
-		Mails.bemVindo(this);
-
+		if(this.email!=null)
+			Mails.bemVindo(this);
 		return this.save();
 	}
 

@@ -1,0 +1,90 @@
+<div class="container">
+  <div>
+    <h2>Pedido</h2>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-target="#menu1" data-toggle="tab">Detalhes Pedido</a></li>
+      <li><a data-target="#menu2" data-toggle="tab" ng-click="listarComentario()">Comentarios</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="menu1" class="tab-pane fade in active">
+        <h3>Detalhes Pedido</h3>
+        <p>
+          <div class="row">
+          <div class="col-md-6">
+            <div data-tap-disabled="true">
+              <leaflet markers="marker" center="center" layers="layers" height="400px" width="100%"></leaflet>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div ng-show="p.numFotos <= 1">
+              <img width="100%" height="400px" ng-src="service/pedido/{{p.id}}/getFoto/0">
+            </div>
+            <div ng-show="p.numFotos > 1">
+              <uib-carousel interval="myInterval" no-wrap="noWrapSlides" >
+                <uib-slide ng-repeat="foto in p.fotos">
+                  <img width="100%" height="400px" ng-src="{{foto}}">
+                  <div class="carousel-caption">
+                  </div>
+                </uib-slide>
+              </uib-carousel>
+            </div>
+
+          </div>
+        </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Tipo do Animal</label>
+              {{p.tipo}}
+            </div>
+            <div class="form-group">
+              <label>Observacao</label>
+              {{p.observacao}}
+            </div>
+            <div class="form-group">
+              <label>Condições</label>
+              {{p.condicoes}}
+            </div>
+            <div class="form-group">
+              <label >Cidade</label>
+              {{p.municipio.nome}}
+            </div>
+            <div class="form-group">
+              <label>Vezes que esse animal foi visto</label>
+              {{p.frequencia}}
+            </div>
+          </div>
+        </p>
+      </div>
+      <div id="menu2" class="tab-pane fade">
+        <h3>Comentarios</h3>
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <textarea class="form-control pull-right" ng-disabled="!usuario" rows="3" ng-model="comentario"></textarea>
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-primary pull-left espacamento_div" ng-click="comentar()" ng-disabled="!usuario">Comentar</button>
+          </div>
+        </div>
+        <div class="col-md-12 espacamento_div">
+          <div ng-repeat="c in comentarios">
+            <div class="col-md-1">
+              <img ng-show="c.usuario.vinculo == 'FACEBOOK'" ng-src="images/{{c.usuario.perfilFoto}}" alt="{{c.comentario}}" class="img-thumbnail" height="50px" width="50px">
+              <img ng-show="c.usuario.vinculo != 'FACEBOOK'" ng-src="{{c.usuario.perfilFoto}}" alt="{{c.comentario}}" class="img-thumbnail" height="50px" width="50px">
+            </div>
+            <div class="col-md-11">
+              <p>
+                {{c.comentario}}
+              </p>
+              <p>
+                Data : {{c.data}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

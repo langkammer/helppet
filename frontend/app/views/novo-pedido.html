@@ -1,14 +1,19 @@
 <div class="container">
   <div>
-    <h2>Pedido</h2>
-    <div class="row">
-      <div class="col-md-6">
+    <h2>Pedido de Ajuda</h2>
+    <ul class="nav nav-pills" role="tablist">
+      <li role="presentation" class="active"><a>Passo 1</a></li>
+      <li role="presentation" class="disabled"><a>Passo 2</a></li>
+    </ul>
+    <div class="row espacamentopedidomapa">
+      <div class="col-md-12">
         <div data-tap-disabled="true">
-          <leaflet lf-center="center" markers="markers" layers="layers" height="400px" width="100%"></leaflet>
+          <leaflet lf-center="center" markers="markers" layers="layers" height="500px" width="100%"></leaflet>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <form>
+        <div class="col-md-6">
           <div class="form-group">
             <label for="tipo_animal">Tipo do Animal</label>
             <select class="col-md-9 form-control" id="tipo_animal" ng-model="pedido.tipoAnimal">
@@ -25,42 +30,44 @@
             <label for="condicao">Condições</label>
             <textarea id="condicao" class="form-control" ng-model="pedido.condicoes"></textarea>
           </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
-          <label for="estados">Estado</label>
-          <select name="estados" id="estados" class="form-control" ng-model="estado"
-                  ng-options="e as e.nome for e in uf" style="width: 100%;"
-                  ng-change="listaCidades(estado.sigla)" data-placeholder="Selecione o Estado" >
-            <option></option>
-          </select>
-          <label for="cidades">Cidade</label>
-          <select name="cidades" id="cidades" class="form-control" ng-model="municipio"
-                ng-options="c as c.nome for c in cidades" style="width: 100%;"
-                data-placeholder="Selecione a Cidade" ng-change="selecionaCidadeMapa()">
-            <option></option>
-          </select>
-          <label for="tipoendereco">Tipo Endereço</label>
-          <select id="tipoendereco" class="col-md-9 form-control" id="tip_endereco" ng-model="tipEndereco">
-            <option value="MAPA" checked>Mapa</option>
-            <option value="END">Endereco</option>
-          </select>
+            <label for="estados">Estado</label>
+            <select name="estados" id="estados" class="form-control" ng-model="estado"
+                    ng-options="e as e.nome for e in uf" style="width: 100%;"
+                    ng-change="listaCidades(estado.sigla)" data-placeholder="Selecione o Estado" >
+              <option></option>
+            </select>
+            <label for="cidades">Cidade</label>
+            <select name="cidades" id="cidades" class="form-control" ng-model="municipio"
+                    ng-options="c as c.nome for c in cidades" style="width: 100%;"
+                    data-placeholder="Selecione a Cidade" ng-change="selecionaCidadeMapa()">
+              <option></option>
+            </select>
+            <label for="tipoendereco">Tipo Endereço</label>
+            <select id="tipoendereco" class="col-md-9 form-control" id="tip_endereco" ng-model="tipEndereco">
+              <option value="MAPA" checked>Mapa</option>
+              <!--<option value="END">Endereco</option>-->
+            </select>
 
-          <label for="endereco">Endereco</label>
-          <input id="endereco" class="form-control" ng-model="pedido.endereco" ng-disabled="tipEndereco=='MAPA'">
-          <div ng-show="coordenada.lat">Lat : {{coordenada.lat}} Lng : {{coordenada.lng}}</div>
+            <!--<label for="endereco">Endereco</label>-->
+            <!--<input id="endereco" class="form-control" ng-model="pedido.endereco" ng-disabled="tipEndereco=='MAPA'">-->
+            <div ng-show="coordenada.lat">Lat : {{coordenada.lat}} Lng : {{coordenada.lng}}</div>
           </div>
           <div class="form-group">
             <label for="freq">Quantas Vezes você ja viu esse animal</label>
             <div ng-init="x = 5">
-              <uib-rating id="freq" ng-model="pedido.frequencia" max="3" state-on="'fa fa-eye'" state-off="'fa fa-sun-o'" aria-labelledby="custom-icons-1">
+              <uib-rating id="freq" ng-model="pedido.frequencia" max="3" state-on="'glyphicon-ok-sign'" state-off="'glyphicon-ok-circle'" aria-labelledby="custom-icons-1">
 
-              </uib-rating> <b  ng-show="pedido.frequencia">({{pedido.frequencia}} <i ng-show="pedido.frequencia > 2">Vez ou mais</i> <i ng-show="pedido.frequencia <= 2">Vez </i>)</b></div>
+              </uib-rating> <b  ng-show="pedido.frequencia">({{pedido.frequencia}} <i ng-show="pedido.frequencia > 2">Vez ou mais</i> <i ng-show="pedido.frequencia <= 2">Vez </i>)</b>
+            </div>
           </div>
-
+        </div>
         </form>
+      </div>
       </div>
     </div>
     <button type="submit" class="btn btn-primary pull-right" ng-click="salvarPedido()">Salvar Pedido e Anexar Fotos</button>
-
-
   </div>
 </div>

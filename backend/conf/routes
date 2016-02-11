@@ -14,6 +14,8 @@ GET		/styles/											staticDir:public/app/styles
 GET		/images/											staticDir:public/app/images
 GET		/fonts/												staticDir:public/app/fonts
 GET		/stylesheets/										staticDir:public/stylesheets
+GET		/font-awesome/										staticDir:public/app/font-awesome
+GET		/bootstrap/											staticDir:public/app/bootstrap
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

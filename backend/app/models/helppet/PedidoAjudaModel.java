@@ -103,7 +103,8 @@ public class PedidoAjudaModel extends GenericModel{
 	public MunicipioModel municipio;
 
 	public static List<PedidoAjudaModel> buscarLatLng(CoordenadaGps coordenada){
-		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint("+coordenada.lat+","+coordenada.lng+"), 4326), "+coordenada.distancia+"))";
+		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint("+coordenada.lat+","+coordenada.lng+"), 4326), "+coordenada.distancia+")) and status = + 1 ";
+
 
 		//List lista = JPA.em().createQuery(sql).getResultList();
 
@@ -114,7 +115,8 @@ public class PedidoAjudaModel extends GenericModel{
 
 		String raio = GeoUtils.zomToRaio(raioInt);
 
-		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lng + "," +lat  + "), 4326), " + raio + "))";
+		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lng + "," +lat  + "), 4326), " + raio + ")) and status = + 1 ";
+
 
 		List<PedidoAjudaModel> listaPedidos = JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 
@@ -178,7 +180,7 @@ public class PedidoAjudaModel extends GenericModel{
 
 		if(ordem == true) {
 			String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lat + "," + lng + "), 4326), " + raio + "))" +
-					" and id_municipio = " + codigoMunicipio + " and  tipo_animal = " + tipoAnimal.ordinal() + " order by data_postagem asc";
+					" and status = 1 and id_municipio = " + codigoMunicipio + " and  tipo_animal = " + tipoAnimal.ordinal() + " order by data_postagem asc";
 
 			List<PedidoAjudaModel> listaPedidos = JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 
@@ -186,7 +188,7 @@ public class PedidoAjudaModel extends GenericModel{
 		}
 		else{
 			String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lat + "," + lng + "), 4326), " + raio + "))" +
-					" and id_municipio = " + codigoMunicipio + " and  tipo_animal = " + tipoAnimal.ordinal() + " order by data_postagem desc";
+					"  and status = 1 and id_municipio = " + codigoMunicipio + " and  tipo_animal = " + tipoAnimal.ordinal() + " order by data_postagem desc";
 
 			List<PedidoAjudaModel> listaPedidos = JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 
@@ -259,7 +261,8 @@ public class PedidoAjudaModel extends GenericModel{
 
 		pedido.save();
 
-		Mails.notificaPublicacaoPendente(EnumPublicacao.PENDENTE,pedido.usuario);
+		if(pedido.usuario.email!=null)
+			Mails.notificaPublicacaoPendente(EnumPublicacao.PENDENTE,pedido.usuario);
 
 		return "ok";
 
@@ -409,7 +412,8 @@ public class PedidoAjudaModel extends GenericModel{
 		if(this.status != EnumPedidoAjuda.APROVADO){
 			this.status = EnumPedidoAjuda.APROVADO;
 			this.save();
-			Mails.notificaPublicacaoAprovada(EnumPublicacao.PUBLICADO, this.usuario);
+			if(this.usuario.email!=null)
+				Mails.notificaPublicacaoAprovada(EnumPublicacao.PUBLICADO, this.usuario);
 		}
 
 	}
@@ -417,7 +421,8 @@ public class PedidoAjudaModel extends GenericModel{
 
 			this.status = EnumPedidoAjuda.REPROVADO;
 			this.save();
-		Mails.notificaPublicacaoReprovada(EnumPublicacao.REPROVADO, this.usuario);
+		if(this.usuario.email!=null)
+			Mails.notificaPublicacaoReprovada(EnumPublicacao.REPROVADO, this.usuario);
 
 	}
 }

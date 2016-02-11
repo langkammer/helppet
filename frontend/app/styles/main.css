@@ -122,6 +122,13 @@
 
 
 }
+.espacamentopedidomapa {
+
+  margin-left: -10px;
+  margin-top: 20px;
+
+
+}
 .espacamento2 {
 
   margin-left: -10px;
@@ -140,7 +147,7 @@
 }
 .carousel .item {
   width: 100%; /*slider width*/
-  max-height: 1000px; /*slider height*/
+  max-height: 900px; /*slider height*/
 }
 .carousel .item img {
   width: 100%; /*img width*/

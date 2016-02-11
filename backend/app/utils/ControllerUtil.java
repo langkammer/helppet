@@ -6,7 +6,6 @@ import com.vividsolutions.jts.geom.Geometry;
 import enums.StatusEnum;
 import flexjson.JSONSerializer;
 import flexjson.transformer.DateTransformer;
-import org.geotools.gml.producer.GeometryTransformer;
 import play.mvc.Controller;
 
 import java.util.Date;

@@ -1,0 +1,45 @@
+<div>
+
+  <!-- Main component for a primary marketing message or call to action -->
+  <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+    <uib-slide ng-repeat="slide in slides" active="slide.active">
+      <img ng-src="{{slide.image}}">
+      <div class="carousel-caption">
+        <p>{{slide.text}}</p>
+      </div>
+    </uib-slide>
+  </uib-carousel>
+  <div class="container marketing espacamento">
+
+    <h4>Como o Help Pet pode Ajudar os animais de rua?</h4>
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <!--<i class="material-icons">map</i>-->
+        <img class="img-circle" src="images/head_map.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Mapeando</h2>
+        <p>Mapeando geograficamente animais abandonados de rua, pode se ter um controle onde esses animais mais aparecem, com isso poderá ter um planejamento de resgate desses animais</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img class="img-circle" src="images/head_divulga.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Divulgando</h2>
+        <p>Ajudando na divulgação de animais perdidos, o aplicativo pode compartilhar nas redes sociais informações sobre o animal perdido, assim acelerando o seu resgate</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <img class="img-circle" src="images/head_solidario_animal.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Resgatando</h2>
+        <p>O resgate é feito por pesoas que são solidarias a esses animais abandonados.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- /END THE FEATURETTES -->
+
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Criado por Robson Emilio Langkammer</p>
+    </footer>
+
+  </div>
+</div>

@@ -6,10 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <content url="file://E:/play/play-1.3.1/modules/docviewer">
-      <sourceFolder url="file://E:/play/play-1.3.1/modules/docviewer/app" isTestSource="false" />
-    </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library">
@@ -25,21 +22,21 @@
     <orderEntry type="module-library">
       <library name="PlayFramework Dependencies">
         <CLASSES>
-          <root url="file://E:/play/play-1.3.1/framework/lib" />
+          <root url="file://D:/programas/play-1.2.7.2/play-1.2.7.2/framework/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://E:/play/play-1.3.1/framework/lib" recursive="false" />
+        <jarDirectory url="file://D:/programas/play-1.2.7.2/play-1.2.7.2/framework/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://E:/play/play-1.3.1/framework/play-1.3.1.jar!/" />
+          <root url="jar://D:/programas/play-1.2.7.2/play-1.2.7.2/framework/play-1.2.7.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://E:/play/play-1.3.1/framework/src" />
+          <root url="file://D:/programas/play-1.2.7.2/play-1.2.7.2/framework/src" />
         </SOURCES>
       </library>
     </orderEntry>

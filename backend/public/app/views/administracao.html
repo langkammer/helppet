@@ -1,0 +1,206 @@
+<div>
+  <div class="espacamento3">
+  <div class="row espacamento2">
+  <div class="col-md-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">Publicações</div>
+      <div class="panel-body">
+        <table width="100%" class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp alinhamento-texto-esquerda">
+          <thead>
+          <tr>
+            <th>Foto</th>
+            <th>Cidade</th>
+            <th>Municipio</th>
+            <th>Condições</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+            <!--<th></th>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="p in pedidos">
+            <td ng-click="abrePedido(p)"><img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="50px" width="50px"></td>
+            <td ng-click="abrePedido(p)">{{p.municipio.nome}}</td>
+            <td ng-click="abrePedido(p)"><div ng-show="p.observacao.lenght > 10">...</div>{{p.condicoes}}</td>
+            <td ng-click="abrePedido(p)"><div ng-show="p.observacao.lenght > 10">...</div>{{p.observacao}}</td>
+            <td ng-click="abrePedido(p)">{{p.data}}</td>
+            <td ng-click="abrePedido(p)">{{p.status}}</td>
+            <td>  <button type="button" class="btn btn-danger" ng-click="abreModalConfirmPedidos(p)">Avaliar</button>
+            </td>
+
+            <!--<td>-->
+              <!--<button ng-click="abreNotificacao(p)" class="mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-js-ripple-effect mdl-button&#45;&#45;colored">-->
+                <!--<i class="material-icons" >remove</i>-->
+              <!--</button>-->
+            <!--</td>-->
+          </tr>
+          </tbody>
+        </table>
+        <div class="center">
+          <uib-pagination total-items="totalItemsPedidos" ng-model="paginaCorrentePedidos" ng-change="listarPedidos()"></uib-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">Usuarios Cadastrados</div>
+        <div class="form-group col-md-6">
+          <label for="buscaUser">Busca</label>
+          <input class="form-control" id="buscaUser" type="text" ng-model="buscaUser">
+        </div>
+        <div class="panel-body">
+          <table width="100%" class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp alinhamento-texto-esquerda">
+            <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Status</th>
+              <!--<th></th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="u in usuarios | filter:buscaUser">
+              <td>
+                <img ng-show="u.idSocial" ng-src="https://graph.facebook.com/{{u.idSocial}}/picture?type=large" height="50px" width="50px" class="img-circle">
+                <img ng-show="!u.idSocial" src="images/{{u.perfilFoto}}" height="50px" width="50px" class="img-circle">
+              </td>
+              <td>{{u.nome}}</td>
+              <td>{{u.email}}</td>
+              <td>{{u.status}}</td>
+              <!--<td>-->
+              <!--<button ng-click="abreNotificacao(p)" class="mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-js-ripple-effect mdl-button&#45;&#45;colored">-->
+              <!--<i class="material-icons" >remove</i>-->
+              <!--</button>-->
+              <!--</td>-->
+            </tr>
+            </tbody>
+          </table>
+          <div class="center">
+            <uib-pagination total-items="totalItemsUsuarios" ng-model="paginaCorrenteUsuarios" ng-change="listarUsuarios()"></uib-pagination>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">Mensagens Recebidas</div>
+      <div class="form-group col-md-6">
+        <label for="busca">Busca</label>
+        <input class="form-control" id="busca" type="text" ng-model="busca">
+      </div>
+      <div class="panel-body">
+        <table width="100%" class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp alinhamento-texto-esquerda">
+          <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Msg</th>
+            <th>Tipo</th>
+
+            <!--<th></th>-->
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="m in mensagens" ng-click="abreMsgView(m)">
+            <td>{{m.nome}}</td>
+            <td>{{m.email}}</td>
+            <td><div ng-show="m.msg.lenght > 10">...</div>{{m.msg}}</td>
+            <td>{{m.tipoContato}}</td>
+            <!--<td>-->
+            <!--<button ng-click="abreNotificacao(p)" class="mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-js-ripple-effect mdl-button&#45;&#45;colored">-->
+            <!--<i class="material-icons" >remove</i>-->
+            <!--</button>-->
+            <!--</td>-->
+          </tr>
+          </tbody>
+        </table>
+        <div class="center">
+          <uib-pagination total-items="totalItemsMensagens" ng-model="paginaCorrenteMensagens" ng-change="listarMsg()"></uib-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+   Modal Exluir Pedido
+    <div class="modal fade" id="ModalAvaliacaoPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Aviso!</h4>
+          </div>
+          <div class="modal-body">
+            <img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="200px" width="200px">
+            Condições :
+            {{p.condicoes}}
+            <p></p>
+            Observação:
+            {{p.observacao}}
+            Você tem certeza que deseja aprovar essa Publicação?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reprovar(p)">Reprovar</button>
+            <button type="button" class="btn btn-danger" ng-click="aprovar(p)">Aprovar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="modal fade" id="ModalMsgContato" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Mensagem</h4>
+        </div>
+        <div class="modal-body">
+          Nome :
+          {{m.nome}}
+          <p></p>
+          Email:
+          {{m.email}}
+          <p></p>
+          Tipo:
+          {{m.tipoContato}}
+          <p></p>
+          Msg:
+          {{m.msg}}
+          <p></p>
+          Data:
+          {{m.data}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="ModalAvaliacaoPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Aviso!</h4>
+        </div>
+        <div class="modal-body">
+          <img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="200px" width="200px">
+          Condições :
+          {{p.condicoes}}
+          <p></p>
+          Observação:
+          {{p.observacao}}
+          Você tem certeza que deseja aprovar essa Publicação?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reprovar(p)">Reprovar</button>
+          <button type="button" class="btn btn-danger" ng-click="aprovar(p)">Aprovar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

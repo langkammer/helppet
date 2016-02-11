@@ -1,7 +1,5 @@
 package controllers;
 
-import models.bean.PedidoPonto;
-import models.helppet.PedidoAjudaModel;
 import models.portalseg.UsuarioModel;
 import notifiers.Mails;
 import utils.ControllerUtil;
@@ -23,13 +21,13 @@ public class UsuarioController extends ControllerUtil {
 
             if(usuario == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM,"usuario"));
-
-            UsuarioModel verificaUserCadastrado = UsuarioModel.find("email = :email")
-                                                              .setParameter("email",usuario.email)
-                                                              .first();
-            if(verificaUserCadastrado!=null)
-                renderJSONError("Email Já Cadastrado");
-
+            if(usuario.email!=null){
+                UsuarioModel verificaUserCadastrado = UsuarioModel.find("email = :email")
+                        .setParameter("email",usuario.email)
+                        .first();
+                if(verificaUserCadastrado!=null)
+                    renderJSONError("Email Já Cadastrado");
+            }
             UsuarioModel user = usuario.salvarUsuario();
 
             session.put("usuario",user.id);
@@ -38,7 +36,7 @@ public class UsuarioController extends ControllerUtil {
                 renderJSONSucesso(user, String.format(MessageUtil.CADASTRO_REALIZADO_SUCESSO_P, "Usuario"), 0);
         }
         catch (Exception e){
-            renderJSONError(MessageUtil.ERRO_PADRAO);
+            renderJSONError(String.format(MessageUtil.ERRO_PADRAO,"cadastro de usuario " + e.getMessage()));
 
         }
 
@@ -112,7 +110,8 @@ public class UsuarioController extends ControllerUtil {
             usuario.senha = SenhaGenerate.sha1(novaSenha);
             if(usuario!=null){
                 session.put("usuario",usuario.id);
-                Mails.reenviaSenha(usuario,novaSenha);
+                if(usuario.email!=usuario.email)
+                    Mails.reenviaSenha(usuario,novaSenha);
                 renderJSONSucesso(usuario.save(), "Senha Reenviada com Sucesso!",0);
             }
 
