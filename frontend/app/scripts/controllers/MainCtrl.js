@@ -204,6 +204,7 @@ angular.module('frontendApp')
           Mensagem.exibir(data.message, 'error');
         } else {
           Mensagem.exibir(data.message, 'success');
+          $('#MensgEnviadaModal').modal('show');                // initializes and invokes show immediately as
           resetFormContato();
 
         }
