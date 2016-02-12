@@ -366,6 +366,8 @@ public class PedidoAjudaModel extends GenericModel{
 
 			pedido.data = dt.format(p.data);
 
+			pedido.status = p.status;
+
 			pedido.id = p.id;
 
 			listaPedido.add(pedido);

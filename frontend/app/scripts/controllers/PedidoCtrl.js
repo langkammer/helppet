@@ -214,6 +214,19 @@ angular.module('frontendApp')
 
 
     };
+    function publicarNaRedeSocial(id){
+      FB.ui({
+        method: 'share',
+        href: 'http://www.helppet.net.br/redeSocial/'+id+'/gerar',
+        redirect_uri : 'http://www.helppet.net.br'
+      });
+    }
+
+    $scope.abrePedido = function(p){
+      SessaoArmazenacao.setPedidos(p);
+      $location.path("/detalhes-pedido");
+    };
+
     $scope.finalizarPedido = function(e){
       if($scope.files.length>5){
         Mensagem.exibir("Impossivel Publicar Fotos supera o limite de 5 fotos");
@@ -241,7 +254,7 @@ angular.module('frontendApp')
                 Mensagem.exibir(data.message, 'error');
               }
               else {
-
+                publicarNaRedeSocial(SessaoArmazenacao.getPedidos().id);
                 if(SessaoArmazenacao.getPedidos())
                   SessaoArmazenacao.limparPedidos();
                 Mensagem.exibir(data.message,"success");

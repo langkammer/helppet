@@ -1,79 +1,92 @@
 <div>
-  <div class="row espacamento2">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored espacamento3" ng-click="adicionarPedido()">
-      <i class="material-icons">pets</i> Adicionar Animal Perdido
-    </button>
-  </div>
   <div class="form-group espacamento3">
-    <div class="row espacamento2">
-      <uib-accordion >
-        <uib-accordion-group heading="Minhas Informações" is-open="true">
-            <div class="col-md-3">
+    <div class="col-md-12">
+      <h3><span class="label label-default">Meu Perfil</span></h3>
+
+      <div class="col-md-2 pull-left ">
+        <div class="row">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="adicionarPedido()">
+            <i class="material-icons">pets</i> Adicionar Animal Perdido
+          </button>
+        </div>
+        <div class="row espacamentopedidomapa">
+          <uib-accordion >
+            <uib-accordion-group heading="Minhas Informações" is-open="true">
+                <div class="center">
+                  <img ng-show="usuario.idSocial" ng-src="https://graph.facebook.com/{{usuario.idSocial}}/picture?type=large" height="50px" width="50px" class="img-circle">
+                  <img ng-show="!usuario.idSocial" src="images/{{usuario.perfilFoto}}" height="50px" width="50px" class="img-circle">
+                </div>
+                <p></p>
                 <label for="nome">Nome Completo</label>
                 <input type="text" class="form-control" id="nome" placeholder="Nome" ng-value="usuario.nome" ng-model="user.nome" ng-disabled="usuario.idSocial">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" id="email" placeholder="Email" ng-value="usuario.email" ng-model="user.email">
+                <button type="button" class="btn btn-primary pull-right espacamentopedidomapa" ng-click="atualizar()">Atualizar</button>
+              </label>
+            </uib-accordion-group>
+          </uib-accordion>
+          <div class="panel panel-info">
+            <div class="panel-heading">Notificações</div>
+            <div class="panel-body">
+              Nenhuma Notificação
             </div>
-          <div >
-            <button type="button" class="btn btn-primary pull-right" ng-click="atualizar()">Atualizar</button>
           </div>
-          </label>
-        </uib-accordion-group>
-      </uib-accordion>
-
-    </div>
-  </div>
-  <div class="espacamento3">
-  <div class="row espacamento2">
-  <div class="col-md-2">
-    <div class="panel panel-info">
-      <div class="panel-heading">Notificações</div>
-      <div class="panel-body">
-        Nenhuma Notificação
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5">
-    <div class="panel panel-info">
-      <div class="panel-heading">Publicações</div>
-      <div class="panel-body">
-        <table width="100%" class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
-          <thead>
-          <tr>
-            <th>Foto</th>
-            <th>Observações</th>
-            <th>Data</th>
-            <!--<th></th>-->
-          </tr>
-          </thead>
-          <tbody>
-          <tr ng-repeat="p in pedidosUsuario" ng-click="abrePedido(p)">
-            <td ><img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="50px" width="50px"></td>
-            <td><div ng-show="p.observacao.lenght > 10">...</div>{{p.observacao}}</td>
-            <td>{{p.data}}</td>
-            <!--<td>-->
-              <!--<button ng-click="abreNotificacao(p)" class="mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-js-ripple-effect mdl-button&#45;&#45;colored">-->
-                <!--<i class="material-icons" >remove</i>-->
-              <!--</button>-->
-            <!--</td>-->
-          </tr>
-          </tbody>
-        </table>
-
-      </div>
-    </div>
-  </div>
-  <div class="col-md-5 ">
-      <div class="panel panel-info">
-        <div class="panel-heading">Animais Perto de Min</div>
-        <div class="panel-body">
-          <leaflet markers="mapsPontos" lf-center="center" height="400px" layers="layers" width="100%"></leaflet>
         </div>
       </div>
-  </div>
+      <div class="col-md-5">
+        <div class="panel panel-info">
+          <div class="panel-heading">Publicações</div>
+          <div class="panel-body">
+            <table width="100%" class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+              <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Observações</th>
+                <th>Status</th>
+                <th>Data</th>
+                <!--<th></th>-->
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="p in pedidosUsuario" ng-click="abrePedido(p)">
+                <td ><img src="service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="50px" width="50px"></td>
+                <td><div ng-show="p.observacao.lenght > 10">...</div>{{p.observacao}}</td>
+                <td>{{p.status}}</td>
+                <td>{{p.data}}</td>
+                <!--<td>-->
+                <!--<button ng-click="abreNotificacao(p)" class="mdl-button mdl-js-button mdl-button&#45;&#45;fab mdl-js-ripple-effect mdl-button&#45;&#45;colored">-->
+                <!--<i class="material-icons" >remove</i>-->
+                <!--</button>-->
+                <!--</td>-->
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="panel panel-info">
+          <div class="panel-heading">Animais Perto de Min</div>
+          <div class="panel-body">
+            <leaflet markers="mapsPontos" lf-center="center" height="400px" layers="layers" width="100%"></leaflet>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
-</div>
+  <!--<div class="espacamento3">-->
+  <!--<div class="row espacamento2">-->
+  <!--<div class="col-md-5">-->
+
+  <!--</div>-->
+  <!--<div class="col-md-5 ">-->
+
+  <!--</div>-->
+
+  <!--</div>-->
+<!--</div>-->
   <!-- Modal Exluir Pedido -->
   <!--<div class="modal fade" id="ModalRemoverPublicação" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
     <!--<div class="modal-dialog" role="document">-->

@@ -7,6 +7,10 @@
 
 GET		/														staticFile:/public/app/index.html
 
+GET		/redeSocial/{idPedido}/gerarPaginaHtml				GenericosController.gerarPaginaHtmlCompartilhamento
+GET		/robots.txt											staticFile:/public/app/robots.txt
+GET		/googled2a6346a69c83a0c.html						staticFile:/public/app/googled2a6346a69c83a0c.html
+
 # Map static resources from the /app/public folder to the / path. This makes the front end works.
 GET		/views/												staticDir:public/app/views
 GET		/scripts/											staticDir:public/app/scripts

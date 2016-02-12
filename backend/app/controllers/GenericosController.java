@@ -10,7 +10,11 @@ import utils.ControllerUtil;
 import utils.GoogleMapsUtil;
 import utils.messages.MessageUtil;
 
+import javax.swing.text.html.HTML;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLWriter;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Robson on 20/10/2015.
@@ -83,6 +87,44 @@ public class GenericosController extends ControllerUtil {
             renderJSONError(MessageUtil.ERRO_PADRAO);
 
         }
+    }
+
+    public static void gerarPaginaHtmlCompartilhamento(Long idPedido){
+
+        try {
+            PedidoAjudaModel pedido = PedidoAjudaModel.findById(idPedido);
+
+            if (pedido != null) {
+                renderHtml("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"pt-br\" lang=\"pt-br\">\n" +
+                        "<head>\n" +
+                        "<title>HELP-PET</title>\n" +
+                        "<meta charset=\"utf-8\">\n"+
+                        "\t<meta property=\"og:type\"               content=\"article\" />\n" +
+                        "\t<meta property=\"og:title\"              content=\"Animal de rua Perdido em : " + pedido.municipio.nome + "\" />\n" +
+                        "\t<meta property=\"og:description\"        content=\"Ajude o resgate dele acessando nosso Portal ou em nosos Aplicativo Movel\" />\n" +
+                        "\t<meta property=\"og:image\"              content=\"http://www.helppet.net.br/service/pedido/" + pedido.id + "/getFoto/0\" />\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "</body>\n" +
+                        "</html>");
+            } else {
+                renderHtml("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"pt-br\" lang=\"pt-br\">\n" +
+                        "<head>\n" +
+                        "<title>HELP-PET</title>\n" +
+                        "<meta charset=\"utf-8\">\n"+
+                        "\t<meta property=\"og:type\"               content=\"article\" />\n" +
+                        "\t<meta property=\"og:description\"        content=\"Ajude o resgate dele acessando nosso Portal ou em nosos Aplicativo Movel\" />\n" +
+                        "</head>\n" +
+                        "<body>\n" +
+                        "</body>\n" +
+                        "</html>");
+            }
+        }
+        catch (Exception e){
+            renderJSONError("erro " + e);
+        }
+
+
     }
 
 }
