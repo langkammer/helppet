@@ -37,7 +37,24 @@ gulp.task('install', ['git-check'], function() {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
 });
-
+gulp.task('add-proxy', function() {
+  return replace({
+    regex: "http://localhost:9000",
+    replacement: "http://localhost:8100",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+})
+gulp.task('remove-proxy', function() {
+  return replace({
+    regex: "http://localhost:9000",
+    replacement: "http://localhost:8100",
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+})
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
     console.log(

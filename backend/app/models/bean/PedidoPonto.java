@@ -5,6 +5,7 @@ import enums.EnumPedidoAjuda;
 import enums.TipoAnimal;
 import models.base.MunicipioModel;
 import models.helppet.PedidoAjudaModel;
+import models.portalseg.UsuarioModel;
 
 import javax.persistence.Column;
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class PedidoPonto {
 	public String data;
 
 	public String[] fotos;
+
+	public UsuarioModel usuario;
 
 	public PedidoPonto(){}
 

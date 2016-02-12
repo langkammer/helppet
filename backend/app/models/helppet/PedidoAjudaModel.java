@@ -400,8 +400,11 @@ public class PedidoAjudaModel extends GenericModel{
 			pedidoBean.frequencia = p.frequencia;
 			pedidoBean.municipio = p.municipio;
 			pedidoBean.idUsuario = p.usuario.id;
+			pedidoBean.usuario = p.usuario;
 			pedidoBean.status = p.status;
 			pedidoBean.data = dt.format(p.data);
+			pedidoBean.fotos = 	PedidoAjudaModel.getFotosArray(p.id);
+
 
 			listaPedidosBean.add(pedidoBean);
 		}

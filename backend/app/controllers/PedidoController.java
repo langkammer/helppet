@@ -192,7 +192,6 @@ public class PedidoController extends ControllerUtil {
             renderJSONError("Erro ao Buscar Pedidos");
         }
     }
-
     public static void aprovarPedido(PedidoAjudaModel pedido){
         try{
             pedido.aprovarPedido();

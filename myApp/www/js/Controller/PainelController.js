@@ -1,6 +1,24 @@
 app.controller('PainelCtrl', function($scope, $cordovaGeolocation, $cordovaBarcodeScanner, $state, $ionicPopup, $ionicModal,
-                                      $timeout, leafletData,$cordovaCamera,Mensagem,pipeService) {
+                                      $timeout, leafletData,$cordovaCamera,Mensagem,pipeService,PedidoService) {
   // Called to navigate to the main app
+
+  $scope.items = [];
+
+  var pagina = 1;
+  $scope.carregarMais = function() {
+    PedidoService.listarPedido(pagina,function (data) {
+      if (data.status == 'e') {
+        Mensagem.exibir(data.message, 'error');
+      } else {
+        if(data.data){
+          $scope.pedidos = data.data;
+          $scope.$broadcast('scroll.infiniteScrollComplete');
+          pagina++;
+        }
+      }
+
+    });
+  };
 
   $scope.pedido = {
     fotos : []
@@ -111,7 +129,7 @@ app.controller('PainelCtrl', function($scope, $cordovaGeolocation, $cordovaBarco
     }
     };
 
-
+  $scope.carregarMais();
 
 
 });

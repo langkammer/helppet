@@ -54,6 +54,7 @@ POST	/service/pedido/commentar								PedidoController.comentar
 GET		/service/pedido/{idPedido}/listarComentario				PedidoController.listarComentario
 GET 	/service/pedido/listarPedidosByUser						PedidoController.listarPedidosByUsuario
 GET 	/service/pedido/{pagina}/listarPedidosPagina			PedidoController.listarPedidosPaginado
+
 POST 	/service/pedido/aprovarPedido							PedidoController.aprovarPedido
 POST 	/service/pedido/reprovarPedido							PedidoController.reprovarPedido
 
