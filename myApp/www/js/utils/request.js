@@ -19,6 +19,10 @@
       }
     };
 
+      //var prefix = "http://192.168.0.103:9000/service/";
+
+      var prefix = undefined;
+
     function BlockUtil(element){
 
       this.block = function(){
@@ -189,9 +193,13 @@
 
       block.block();
 
-			var _url = 'service/' + servico;
+      if(prefix)
+        var _url = prefix + servico;
+      else
+        var _url = servico;
 
-			var config = {
+
+      var config = {
 				headers: {
 					'Content-type': 'application/x-www-form-urlencoded; charset=utf8',
 					'Accept': 'application/json',
@@ -235,7 +243,12 @@
 
       block.block();
 
-			var http = $http.get('service/' + url, config.headers).
+      if(prefix)
+        var url1 = prefix + url;
+      else
+        var url1 = prefix + url;
+
+			var http = $http.get(url1, config.headers).
 
 				success(function (data) {
 

@@ -48,11 +48,12 @@ POST 	/service/pedido/buscaPorEndereco						PedidoController.buscarPedidosPorEnd
 POST 	/service/pedido/cadastrarPedido							PedidoController.cadastrarPedido
 POST 	/service/pedido/filtrarPedidos							PedidoController.listarPedidos
 POST 	/service/pedido/adicionarFoto							PedidoController.salvarFoto
+POST 	/service/pedido/adicionarFoto2							PedidoController.salvarFoto2
 GET 	/service/pedido/{idPedido}/getFoto/{numFoto}			PedidoController.getFoto
 GET		/service/pedido/{idPedido}/getPedido					PedidoController.getPedido
 POST	/service/pedido/commentar								PedidoController.comentar
 GET		/service/pedido/{idPedido}/listarComentario				PedidoController.listarComentario
-GET 	/service/pedido/listarPedidosByUser						PedidoController.listarPedidosByUsuario
+POST 	/service/pedido/listarPedidosByUser						PedidoController.listarPedidosByUsuario
 GET 	/service/pedido/{pagina}/listarPedidosPagina			PedidoController.listarPedidosPaginado
 
 POST 	/service/pedido/aprovarPedido							PedidoController.aprovarPedido
@@ -70,3 +71,4 @@ GET			/service/pedido/gerarDados							PedidoController.gerarDadosCidades
 
 # MAPA
 POST 		/service/mapa/filtrarPedidosMapa					MapaController.listarPontos
+POST 		/service/mapa/filtrarPedidosMapaApp					MapaController.listarAppPontos

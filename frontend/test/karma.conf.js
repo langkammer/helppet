@@ -68,6 +68,7 @@ module.exports = function(config) {
       'bower_components/flow.js/dist/flow.js',
       'bower_components/crypto-js/index.js',
       'bower_components/angular-facebook/lib/angular-facebook.js',
+      'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

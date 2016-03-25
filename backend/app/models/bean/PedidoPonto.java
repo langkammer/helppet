@@ -32,6 +32,8 @@ public class PedidoPonto {
 
 	public TipoAnimal tipo;
 
+	public String layer;
+
 	public Long idUsuario;
 
 	public IconBean icon;
@@ -51,6 +53,8 @@ public class PedidoPonto {
 	public String[] fotos;
 
 	public UsuarioModel usuario;
+
+	public Long quantidadeComentarios;
 
 	public PedidoPonto(){}
 
@@ -96,6 +100,7 @@ public class PedidoPonto {
 		this.icon = new IconBean(id);
 		this.numFotos = numFotos;
 		this.fotos = PedidoAjudaModel.getFotosArray(id);
+		this.layer = tipo.toString();
 
 	}
 

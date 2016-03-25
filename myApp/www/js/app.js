@@ -4,10 +4,17 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('myApp',
-  ['ionic', 'leaflet-directive', 'ngCordova', 'ngMessages', 'ngMask', 'ui.utils.masks'])
+  ['ionic', 'leaflet-directive',
+    'ngCordova',
+    'ngMessages',
+    'ngMask',
+    'ui.utils.masks',
+    'LocalStorageModule',
+    'ngFileUpload'
+  ])
 
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
 
     $stateProvider
       .state('intro', {
@@ -18,7 +25,7 @@ var app = angular.module('myApp',
       .state('signin', {
         url: '/sign-in',
         templateUrl: 'templates/sign-in.html',
-        controller: 'PainelCtrl'
+        controller: 'LoginCtrl'
       })
       .state('forgotpassword', {
         url: '/forgot-password',
@@ -45,6 +52,36 @@ var app = angular.module('myApp',
           'home-tab': {
             templateUrl: 'templates/detalhepedido.html',
             controller: 'PainelCtrl'
+
+          }
+        }
+      })
+      .state('tabs.detalhePed', {
+        url: '/detalhePed',
+        views: {
+          'map-tab': {
+            templateUrl: 'pages/tabs/sub_tab/detailpedido_mapa.html',
+            controller: 'PainelCtrl'
+
+          }
+        }
+      })
+      .state('tabs.comentario_map', {
+        url: '/detalhePed',
+        views: {
+          'map-tab': {
+            templateUrl: 'pages/tabs/sub_tab/comentarios_mapa.html',
+            controller: 'PedidoCtrl'
+
+          }
+        }
+      })
+      .state('tabs.detalhePedMapa', {
+        url: '/detalhePed',
+        views: {
+          'map-tab': {
+            templateUrl: 'pages/tabs/sub_tab/mapa_pedido_mapa.html',
+            controller: 'PedidoCtrl'
 
           }
         }
@@ -86,9 +123,22 @@ var app = angular.module('myApp',
 
           }
         }
+      })
+      .state('tabs.perfil', {
+        url: '/perfil',
+        views: {
+          'perfil-tab': {
+            templateUrl: 'templates/perfil.html',
+            controller: 'PerfilCtrl'
+
+          }
+        }
       });
 
-
+    localStorageServiceProvider
+      .setPrefix('myApp')
+      .setStorageType('sessionStorage')
+      .setNotify(true, true)
 
     $urlRouterProvider.otherwise('/sign-in');
 

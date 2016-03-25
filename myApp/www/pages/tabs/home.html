@@ -2,21 +2,23 @@
   <ion-content class="padding">
     <div class="list card" ng-repeat="item in pedidos">
       <div>
-        <div class="item item-avatar"  >
-          <img src="img/cao-vira-lata.jpg">
+        <div ng-show="!item.usuario.idSocial" class="item item-avatar"  >
+          <img src="http://www.helppet.net.br/images/{{item.usuario.perfilFoto}}">
           <h2>{{item.usuario.nome}}</h2>
           <p>{{item.data}}</p>
         </div>
-
+        <div ng-show="item.usuario.idSocial" class="item item-avatar"  >
+          <img src="https://graph.facebook.com/{{item.usuario.idSocial}}/picture?type=large">
+          <h2>{{item.usuario.nome}}</h2>
+          <p>{{item.data}}</p>
+        </div>
         <div class="item item-body">
-          <a href="#/tab/detalhespedido">
+          <a ng-click="abrirPedido(item)">
 
           <ion-slide-box on-slide-changed="slideChanged(index)">
-            <div >
-              <ion-slide>
-                <img class="full-image" ng-src="{{item.fotos[0]}}">
+              <ion-slide ng-repeat="foto in item.fotos">
+                <img src="http://localhost:9000/{{foto}}" height="100%" width="100%">
               </ion-slide>
-            </div>
           </ion-slide-box>
             <!--<img  height="100px" width="100px" ng-src="service/pedido/{{item.id}}/getFoto/0">-->
 
@@ -28,7 +30,9 @@
             {{item.observacao}}
           </p>
           <p>
-            <a href="#" class="subdued">5 Comentarios</a>
+            <a href="#" class="subdued" ng-show="item.quantidadeComentarios > 1">{{item.quantidadeComentarios}} Comentarios</a>
+            <a href="#" class="subdued" ng-show="item.quantidadeComentarios < 2">{{item.quantidadeComentarios}} Comentario</a>
+
           </p>
 
         </div>
@@ -46,10 +50,9 @@
         <p></p>
       </div>
     </div>
-    <div class="card">
-      <button class="button button-full  button-energizedbutton-light"  ng-click="comentarios()">
-        <div class="ion-social-twitch">&nbsp; Mais Postagengs</div>
-      </button>    </div>
+    <div class="card" ng-hide="tamanhoAtual >= tamanhoTotal">
+      <button  class="button button-full button-light" ng-click="carregarMais()">Mais Postagens</button>
+   </div>
   </ion-content>
 
 </ion-view>

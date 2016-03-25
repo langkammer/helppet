@@ -1,0 +1,51 @@
+<ion-view view-title="Localização">
+  <ion-content class="has-header">
+    <div class="list">
+      <div ng-show="!item.usuario.idSocial" class="item item-avatar"  >
+        <img src="http://www.helppet.net.br/images/{{user.perfilFoto}}">
+        <h2>{{user.nome}}</h2>
+      </div>
+      <div ng-show="item.usuario.idSocial" class="item item-avatar"  >
+        <img src="https://graph.facebook.com/{{user.idSocial}}/picture?type=large">
+        <h2>{{user.nome}}</h2>
+      </div>
+      <div class="item item-divider">
+        Email
+      </div>
+      {{user.email}}
+      <div class="item item-divider">
+        Tipo de Usuario
+      </div>
+      {{user.tipo}}
+      <div class="item item-divider">
+        Data de cadastro
+      </div>
+      {{user.data}}
+      <p></p>
+    </div>
+    <div class="item item-divider">
+      Meus Pedidos
+    </div>
+    <div>
+      <div class="row">
+        <div class="col item item-divider">Foto</div>
+        <div class="col item item-divider">Obs</div>
+        <div class="col item item-divider">Status</div>
+        <div class="col item item-divider">Data</div>
+      </div>
+      <div class="row" ng-repeat="p in listaPedidos">
+        <div class="col item"><img src="http://localhost:9000/service/pedido/{{p.id}}/getFoto/0" alt="..." class="img-thumbnail" height="50px" width="50px"></div>
+        <div class="col item">{{p.observacao}}</div>
+        <div class="col item">{{p.status}}</div>
+        <div class="col item">{{p.data}}</div>
+      </div>
+      <p></p>
+
+    </div>
+    <div class="text-center">
+      <button class="button button-assertive" ng-click="deslogar()" >
+        Deslogar
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

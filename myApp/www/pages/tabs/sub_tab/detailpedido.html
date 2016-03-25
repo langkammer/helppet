@@ -1,14 +1,8 @@
 <ion-view view-title="Pedido">
   <ion-content>
 <ion-slide-box on-slide-changed="slideHasChanged($index)">
-  <ion-slide>
-    <img src="img/vira-lata-cao.jpg" height="100%" width="100%">
-  </ion-slide>
-  <ion-slide>
-    <img src="img/cao-vira-lata.jpg" height="100%" width="100%">
-  </ion-slide>
-  <ion-slide>
-    <img src="img/cao-vira-lata2.jpg" height="100%" width="100%">
+  <ion-slide ng-repeat="foto in pedidoDetalhado.fotos">
+    <img src="http://localhost:9000/{{foto}}" height="100%" width="100%">
   </ion-slide>
 </ion-slide-box>
 
@@ -24,31 +18,31 @@
           Tipo animal
         </div>
         <div class="item">
-          Cão
+          {{pedidoDetalhado.tipo}}
         </div>
         <div class="item item-divider">
           Data
         </div>
         <div class="item">
-          01/02/2015
+          {{pedidoDetalhado.data}}
         </div>
         <div class="item item-divider">
           Condições  :
         </div>
         <div class="item">
-          Machucado
+          {{pedidoDetalhado.condicoes}}
         </div>
         <div class="item item-divider">
           Autor :
         </div>
         <div class="item">
-          José Luiz
+          {{pedidoDetalhado.usuario.nome}}
         </div>
         <div class="item item-divider">
           Observação :
         </div>
         <div class="item">
-          Cão Manso mais tenha cuidado
+          {{pedidoDetalhado.observacao}}
         </div>
       </div>
     </div>

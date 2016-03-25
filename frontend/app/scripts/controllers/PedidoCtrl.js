@@ -238,6 +238,7 @@ angular.module('frontendApp')
       }
 
       if($scope.files.length <= 5){
+
         if(!$scope.padrao)
           $scope.padrao = $scope.files[0].name;
         //for(var i = 0; i <= $scope.files.length; i ++){

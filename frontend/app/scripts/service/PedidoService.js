@@ -61,9 +61,9 @@
         request.get('pedido/'+idPedido+'/listarComentario', successCallback, errorCallback);
 
       },
-      listarPedidosUsuario : function (successCallback, errorCallback) {
+      listarPedidosUsuario : function (data,successCallback, errorCallback) {
 
-        request.get('pedido/listarPedidosByUser', successCallback, errorCallback);
+        request.postFormEncoded('pedido/listarPedidosByUser',data, successCallback, errorCallback);
 
       },
       listarPedidosPaginada : function (pagina,successCallback, errorCallback) {

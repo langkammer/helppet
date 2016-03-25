@@ -12,7 +12,7 @@
         <li class="item item-toggle">
           Cães
           <label class="toggle toggle-positive">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="f.cao" value="true">
             <div class="track">
               <div class="handle"></div>
             </div>
@@ -21,7 +21,7 @@
         <li class="item item-toggle">
           Gatos
           <label class="toggle toggle-calm">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="f.gato" value="true">
             <div class="track">
               <div class="handle"></div>
             </div>
@@ -30,7 +30,7 @@
         <li class="item item-toggle">
           Outros
           <label class="toggle toggle-assertive">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="f.outros" value="true">
             <div class="track">
               <div class="handle"></div>
             </div>
@@ -38,8 +38,8 @@
         </li>
         <div class="item range">
           <i>0 KM</i>
-          <input type="range" name="volume" ng-model="range">
-          <i>{{range == null ? 50 : range}} KM</i>
+          <input type="range" name="volume" ng-model="f.raio">
+          <i>{{f.raio == null ? 50 : f.raio}} KM</i>
         </div>
       </ul>
     </ion-view>
@@ -47,7 +47,7 @@
   </content>
   <footer class="bar bar-footer bar-positive">
     <content>
-      <button class="button button-positive " ng-click="filtroMapa.hide()">
+      <button class="button button-positive " ng-click="filtrar(f)">
         Aplicar
       </button>
       <button class="button button-assertive"  ng-click="filtroMapa.hide()">

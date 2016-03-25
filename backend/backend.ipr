@@ -35,7 +35,9 @@
     <file url="file://$PROJECT_DIR$/../frontend/app/styles/style_custom.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../frontend/app/views/main.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../myApp/gulpfile.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../myApp/www/js/Directive/RolagemInfinita.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../myApp/package.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../myApp/www/js/Service/appPreferences.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../myApp/www/js/factories/foto.js" charset="UTF-8" />
   </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
@@ -166,7 +168,7 @@
       <module fileurl="file://$PROJECT_DIR$/backend.iml" filepath="$PROJECT_DIR$/backend.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/tmp/classes" />
   </component>
   <component name="VcsDirectoryMappings">

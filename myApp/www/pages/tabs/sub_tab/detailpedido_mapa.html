@@ -1,0 +1,58 @@
+<ion-view view-title="Pedido">
+  <ion-content>
+<ion-slide-box on-slide-changed="slideHasChanged($index)">
+  <ion-slide ng-repeat="foto in pedidoDetalhado.fotos">
+    <img src="http://localhost:9000/{{foto}}" height="100%" width="100%">
+  </ion-slide>
+</ion-slide-box>
+
+    <button class="button button-full  button-balanced" ng-click="mapaPedidoMapaTab()">
+     <div class="ion-ios-location" >&nbsp; Localização</div>
+    </button>
+    <button class="button button-full  button-energized"  ng-click="comentariosMapaTab()">
+      <div class="ion-social-twitch">&nbsp; Comentários</div>
+    </button>
+    <div class="row">
+      <div class="col col-100 font_detalhes">
+        <div class="item item-divider">
+          Tipo animal
+        </div>
+        <div class="item">
+          {{pedidoDetalhado.tipo}}
+        </div>
+        <div class="item item-divider">
+          Data
+        </div>
+        <div class="item">
+          {{pedidoDetalhado.data}}
+        </div>
+        <div class="item item-divider">
+          Condições  :
+        </div>
+        <div class="item">
+          {{pedidoDetalhado.condicoes}}
+        </div>
+        <div class="item item-divider">
+          Autor :
+        </div>
+        <div class="item">
+          {{pedidoDetalhado.usuario.nome}}
+        </div>
+        <div class="item item-divider">
+          Observação :
+        </div>
+        <div class="item">
+          {{pedidoDetalhado.observacao}}
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!--<a class="button icon ion-home" href="#/tab/home"> Home</a>-->
+    <!--<button class="button button-positive no-animation" ng-click="testa()">-->
+      <!--Adicionar Pedido-->
+    <!--</button>-->
+  </ion-content>
+</ion-view>

@@ -4,6 +4,7 @@ import enums.TipoAnimal;
 import models.CoordenadaGps;
 import models.base.MunicipioModel;
 import models.bean.ComentarioBean;
+import models.bean.PedidoFotoBean;
 import models.bean.PedidoPonto;
 import models.helppet.ComentarioModel;
 import models.helppet.PedidoAjudaModel;
@@ -11,6 +12,7 @@ import utils.ControllerUtil;
 import utils.messages.MessageUtil;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -108,6 +110,24 @@ public class PedidoController extends ControllerUtil {
 
     }
 
+    public static void salvarFoto2(PedidoFotoBean pedido){
+
+        try{
+
+            if(pedido == null)
+                renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM, "pedido"));
+
+            renderJSONSucesso(new PedidoAjudaModel().salvarFoto(pedido.foto,pedido.idPedido,pedido.padrao), "Foto Adicionada com Sucesso" ,0);
+
+
+        }
+        catch (Exception e){
+
+            renderJSONError("ERRO AO ADICIONAR FOTO");
+        }
+
+    }
+
     public static void getFoto(Long idPedido, Integer numFoto){
 
         try{
@@ -148,13 +168,13 @@ public class PedidoController extends ControllerUtil {
 
     public static void comentar(String comentario,Long idPedido){
         try{
-            if(comentario == null)
+            if(comentario.isEmpty() || comentario == null)
                 renderJSONError(String.format(MessageUtil.BAD_REQUEST_PARAM, "comentario"));
             new ComentarioModel().comentar(session.get("usuario"), comentario,idPedido);
             renderJSONSucesso(null,String.format(MessageUtil.MSG_GENERICA_CADASTRO, "Pedido"),0);
         }
         catch (Exception e){
-            renderJSONError("ERRO AO LOCALIZAR FOTO");
+            renderJSONError("Erro ao comentar");
         }
     }
 
@@ -170,10 +190,20 @@ public class PedidoController extends ControllerUtil {
         }
     }
 
-    public static void listarPedidosByUsuario(){
+    public static void listarPedidosByUsuario(Long idUsuario){
         try{
-
-            List<PedidoPonto> pedidos = new PedidoAjudaModel().listarPedidoByUser(session.get("usuario"));
+            List<PedidoPonto> pedidos = null;
+            if(idUsuario!=null){
+                pedidos = new PedidoAjudaModel().listarPedidoByUser(idUsuario.toString());
+            }
+            else{
+                if(session.get("usuario")!=null){
+                    pedidos = new PedidoAjudaModel().listarPedidoByUser(session.get("usuario"));
+                }
+                else{
+                    renderJSONError(MessageUtil.USUARIO_DESLOGADO);
+                }
+            }
 
             renderJSONSucesso(pedidos, String.format(MessageUtil.MSG_GENERICA_CADASTRO, "Pedido"), pedidos.size());
         }

@@ -111,6 +111,58 @@ public class PedidoAjudaModel extends GenericModel{
 		return JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
 	}
 
+	public static List<PedidoPonto> filtrarPedidoMapa(Double lat, Double lng, String raio,Boolean cao,Boolean gato,Boolean outros){
+
+		if(raio.isEmpty() || Integer.parseInt(raio) == 0){
+			raio = "0.50000"; // padrao caso o raio n�o venha ser� de 50 km
+		}
+		else{
+			raio = GeoUtils.converteKmRaio(raio);
+		}
+
+		String sql = "select * from  pedido_ajuda  WHERE ST_Within(geo, ST_Buffer(ST_SetSRID(ST_MakePoint(" + lng + "," +lat  + "), 4326), " + raio + ")) and status = + 1 ";
+
+
+		List<PedidoAjudaModel> listaPedidos = JPA.em().createNativeQuery(sql, PedidoAjudaModel.class).getResultList();
+
+		PedidoPonto pedidoBean;
+
+		List<PedidoPonto> listaBeanPedidos = new ArrayList<PedidoPonto>();
+
+		for(PedidoAjudaModel pedido : listaPedidos){
+			if(cao == true || gato == true || outros == true){
+				if(cao){
+					if(pedido.tipoAnimal == TipoAnimal.CAES){
+						pedidoBean = new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
+								pedido.observacao,pedido.status,pedido.tipoAnimal,pedido.usuario.id,pedido.municipio,pedido.fotos.size());
+						listaBeanPedidos.add(pedidoBean);
+
+					}
+
+				}
+				if(gato){
+					if(pedido.tipoAnimal == TipoAnimal.GATOS){
+						pedidoBean = new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
+								pedido.observacao,pedido.status,pedido.tipoAnimal,pedido.usuario.id,pedido.municipio,pedido.fotos.size());
+						listaBeanPedidos.add(pedidoBean);
+					}
+				}
+				if(outros){
+					if(pedido.tipoAnimal == TipoAnimal.OUTROS){
+						pedidoBean = new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
+								pedido.observacao,pedido.status,pedido.tipoAnimal,pedido.usuario.id,pedido.municipio,pedido.fotos.size());
+						listaBeanPedidos.add(pedidoBean);
+
+					}
+				}
+			}
+
+		}
+
+		return listaBeanPedidos;
+
+	}
+
 	public static List<PedidoPonto> listarPedidosMapa(Double lat, Double lng, Integer raioInt){
 
 		String raio = GeoUtils.zomToRaio(raioInt);
@@ -207,6 +259,8 @@ public class PedidoAjudaModel extends GenericModel{
 		geo.setSRID(4326);
 		this.geo = geo;
 		this.status = EnumPedidoAjuda.AGUARDANDO;
+		if(this.data==null)
+			this.data = new Date();
 		return this.save();
 
 	}
@@ -336,9 +390,13 @@ public class PedidoAjudaModel extends GenericModel{
 	public static PedidoPonto getPedido(Long idPedido){
 
 		PedidoAjudaModel pedido = PedidoAjudaModel.findById(idPedido);
+		SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-		 return new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
+		PedidoPonto p = new PedidoPonto(pedido.geo.getCoordinate().y,pedido.geo.getCoordinate().x,pedido.condicoes,pedido.frequencia,pedido.id,
 				pedido.observacao,pedido.status,pedido.tipoAnimal,pedido.usuario.id,pedido.municipio,pedido.fotos.size());
+		p.data = dt.format(pedido.data);
+		p.usuario = pedido.usuario;
+		  return p;
 
 	}
 
@@ -385,7 +443,7 @@ public class PedidoAjudaModel extends GenericModel{
 
 		List<PedidoPonto> listaPedidosBean = new ArrayList<PedidoPonto>();
 
-		List<PedidoAjudaModel> listaPedidos = PedidoAjudaModel.find("")
+		List<PedidoAjudaModel> listaPedidos = PedidoAjudaModel.find("status = 1")
 				.fetch(pagina, Integer.parseInt(Play.configuration.getProperty("configuration.pagination.size")));
 
 		PedidoPonto pedidoBean;
@@ -404,6 +462,7 @@ public class PedidoAjudaModel extends GenericModel{
 			pedidoBean.status = p.status;
 			pedidoBean.data = dt.format(p.data);
 			pedidoBean.fotos = 	PedidoAjudaModel.getFotosArray(p.id);
+			pedidoBean.quantidadeComentarios = ComentarioModel.count("pedido.id = " + p.id);
 
 
 			listaPedidosBean.add(pedidoBean);

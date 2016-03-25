@@ -10,7 +10,7 @@ public class MessageUtil {
 
 	public static final String SCHEMA_HELP_PET = "HELP_PET";
 
-	public static final String BAD_REQUEST_PARAM = "Bad Request! Parametro %s n�o pode ser nulo.";
+	public static final String BAD_REQUEST_PARAM = "Falta de Dados! Parametro %s não pode ser nulo.";
 
 	public static final String USUARIO_LOGADO_COM_SUCESSO = "Usuario Logado com sucesso !";
 
@@ -30,6 +30,7 @@ public class MessageUtil {
 
 	public static final String CADASTRO_REALIZADO_SUCESSO_P = "Cadastro de %s com Sucesso!";
 
+	public static final String USUARIO_DESLOGADO = "Não Existe usuario Logado!";
 
 
 }

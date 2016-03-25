@@ -28,6 +28,6 @@
     "commit": "b75edd9ce1618edf38a5b3040e747e67d3247837"
   },
   "_source": "git://github.com/linkgod/SHA-1.git",
-  "_target": "~0.1.1",
+  "_target": "^0.1.1",
   "_originalSource": "SHA-1"
 }

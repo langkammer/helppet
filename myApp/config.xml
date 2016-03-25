@@ -8,7 +8,11 @@
      Robson Emilio Langkammer
     </author>
   <content src="index.html"/>
+  <plugin name="cordova-plugin-whitelist" spec="1" />
   <access origin="*"/>
+  <allow-intent href="*"/>
+  <allow-navigation href="*"/>
+  <allow-intent href="geo:*" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -19,7 +23,11 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+  <feature name="Geolocation">
+    <param name="android-package" value="org.apache.cordova.GeoBroker" />
+  </feature>
   <platform name="android">
+    <allow-intent href="market:*" />
     <icon src="resources/android/icon/logo.png" density="ldpi"/>
     <icon src="resources/android/icon/logo.png" density="mdpi"/>
     <icon src="resources/android/icon/logo.png" density="hdpi"/>

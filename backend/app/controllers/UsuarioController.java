@@ -63,7 +63,7 @@ public class UsuarioController extends ControllerUtil {
             }
 
             if(usuario==null)
-                renderJSONError("Usuario ou senha digitados não existem");
+                renderJSONError("Usuario ou senha digitados nao existem");
         }
         catch (Exception e){
 
